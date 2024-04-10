@@ -9,7 +9,7 @@ export const defaultValues = {
     name: "Rudolph Christian Razul",
     email: "razulchristian@gmail.com",
     contact: "09164782075",
-    address: "Davao City",
+    address: "Davao City, Philippines",
   },
   summary:
     "I am a full stack developer Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, libero!",
