@@ -31,25 +31,20 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
         type="text"
         id="name"
         onChange={updateInfo}
-        placeholder="Christian Razul"
+        placeholder="Full Name"
       />
-      <Input
-        type="text"
-        id="email"
-        onChange={updateInfo}
-        placeholder="razulchristian@gmail.com"
-      />
+      <Input type="text" id="email" onChange={updateInfo} placeholder="Email" />
       <Input
         type="text"
         id="contact"
         onChange={updateInfo}
-        placeholder="00000"
+        placeholder="Contact Number"
       />
       <Input
         type="text"
         id="address"
         onChange={updateInfo}
-        placeholder="Davao City"
+        placeholder="Address"
       />
     </div>
   );
