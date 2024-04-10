@@ -28,7 +28,7 @@ export const schema = z.object({
   role: z.string(),
   startDate: z.date(),
   endDate: z.date(),
-  description: z.string(),
+  description: z.string().array().min(1),
 });
 
 interface WorkHistoryFormProps {
@@ -44,6 +44,14 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
   // form hook
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      company: "Lexagle",
+      address: "Singapore",
+      role: "Software Developer",
+      startDate: new Date("2021-01-01"),
+      endDate: new Date(),
+      description: ["Create and Build Web Applications"],
+    },
   });
 
   // function that handles the form submission
@@ -58,7 +66,7 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
   }, [workHistory]);
 
   return (
-    <div className="border-2 p-4">
+    <div className="rounded-md border p-4 shadow-md">
       <h1 className="text-xl font-bold">Work History</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 py-2">

@@ -14,7 +14,7 @@ const SummaryForm = ({ onSummary }: SummaryFormProps) => {
   }, [summary]);
 
   return (
-    <div className="flex w-80 flex-col gap-3 border-2 p-2">
+    <div className="flex w-80 flex-col gap-3 rounded-md border p-4 shadow-md">
       <h1 className="text-xl font-bold">Professional Summary</h1>
       <Textarea
         id="summary"
