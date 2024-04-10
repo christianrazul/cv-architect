@@ -1,29 +1,62 @@
 import { useState } from "react";
 import "./style.css";
 
-const HeaderForm = () => {
-  const [headerInfo, setHeaderInfo] = useState({
-    name: "Chan Razul",
-    email: "",
-    contact: 0,
-    address: "",
-  });
+interface HeaderInfo {
+  name: string;
+  email: string;
+  contact: number;
+  address: string;
+}
 
-  const updateName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updatedName = { ...headerInfo, name: event.target.value };
+interface HeaderFormProps {
+  onHeaderInfo: (headerInfo: HeaderInfo) => void;
+}
 
-    setHeaderInfo(updatedName);
+const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
+  const [headerInfo, setHeaderInfo] = useState({});
+
+  const updateInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const updateInfo = {
+      ...headerInfo,
+      [event.target.id]: event.target.value,
+    };
+    setHeaderInfo(updateInfo);
+
+    if (event.target.id === "name") {
+      onHeaderInfo(event.target.value);
+    }
   };
 
   return (
-    <div>
+    <div className="flex h-80 w-80 flex-col gap-3 border-2 p-2">
       <input
         type="text"
-        onChange={updateName}
+        id="name"
+        onChange={updateInfo}
         placeholder="Christian Razul"
-        className="border-2 border-gray-500"
+        className="h-8 border-2 border-gray-500 p-2"
       />
-      <p>{headerInfo.name}</p>
+      <input
+        type="text"
+        id="email"
+        onChange={updateInfo}
+        placeholder="razulchristian@gmail.com"
+        className="h-8 border-2 border-gray-500 p-2"
+      />
+      <input
+        type="text"
+        id="contact"
+        onChange={updateInfo}
+        placeholder="00000"
+        className="h-8 border-2 border-gray-500 p-2"
+      />
+      <input
+        type="text"
+        id="address"
+        onChange={updateInfo}
+        placeholder="Davao City"
+        className="h-8 border-2 border-gray-500 p-2"
+      />
     </div>
   );
 };
@@ -37,41 +70,38 @@ interface HeaderProps {
 
 const Header = ({ name, email, contact, address }: HeaderProps) => {
   return (
-    <div className="flex bg-blue-500">
-      <div>{name && <h1>{name}</h1>}</div>
+    <div className="flex w-full border border-red-500 p-4">
+      <div>
+        {name && (
+          <h1>
+            {name} {email}
+          </h1>
+        )}
+      </div>
     </div>
   );
 };
 
-const Summary = () => {
-  return <div className="">Summary</div>;
-};
+interface ResumeProps {
+  name: string;
+}
 
-const Education = () => {
-  return <div className="">Education</div>;
-};
-
-const WorkHistory = () => {
-  return <div className="">Work History</div>;
-};
-
-const Resume = ({ name }) => {
+const Resume = ({ name }: ResumeProps) => {
   return (
-    <div className="border-3 flex h-auto w-80 flex-col gap-2 border-red-200 p-4">
+    <div className=" flex h-80 w-80 flex-col gap-2 border-2 ">
       <Header name={name} />
-      {/* <Summary />
-      <Education />
-      <WorkHistory /> */}
     </div>
   );
 };
 
 function App() {
+  const [headerInfo, setHeaderInfo] = useState({});
+
   return (
-    <>
-      <HeaderForm />
-      <Resume name="Chan" />
-    </>
+    <div className="flex gap-4 p-4">
+      <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
+      <Resume name="Test" />
+    </div>
   );
 }
 
