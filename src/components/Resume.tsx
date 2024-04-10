@@ -1,6 +1,7 @@
 import Summary from "./Summary";
 import Header, { HeaderInfo } from "./Header";
 import WorkHistory from "./WorkHistory";
+import Skills from "./Skills";
 
 interface ResumeProps {
   header: HeaderInfo;
@@ -20,6 +21,7 @@ const Resume = ({ header, summary, workHistory }: ResumeProps) => {
           address={header.address}
         />
         <Summary summary={summary} />
+        <Skills />
         <WorkHistory workHistory={[...workHistory]} />
       </div>
     </div>
