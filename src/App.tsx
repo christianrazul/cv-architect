@@ -6,7 +6,7 @@ import SummaryForm from "./components/SummaryForm";
 
 export const defaultValues = {
   header: {
-    name: "Christian Razul",
+    name: "Rudolph Christian Razul",
     email: "razulchristian@gmail.com",
     contact: "09164782075",
     address: "Davao City",
@@ -19,8 +19,10 @@ function App() {
   const [summaryInfo, setSummaryInfo] = useState(defaultValues.summary);
   return (
     <div className="flex gap-4 p-4">
-      <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
-      <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
+      <div className="flex flex-col gap-4">
+        <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
+        <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
+      </div>
       <Resume header={{ ...headerInfo }} summary={summaryInfo} />
     </div>
   );

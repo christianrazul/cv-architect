@@ -8,7 +8,7 @@ interface ResumeProps {
 
 const Resume = ({ header, summary }: ResumeProps) => {
   return (
-    <div className=" flex h-80 w-80 flex-col gap-2 border-2 ">
+    <div className=" flex w-full flex-col gap-2 border">
       <Header
         name={header.name}
         email={header.email}
