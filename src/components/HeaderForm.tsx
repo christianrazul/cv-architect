@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { HeaderInfo } from "./Header";
 import { defaultHeaderInfo } from "../App";
-
+import { Input } from "../../components/ui/input";
 interface HeaderFormProps {
   onHeaderInfo: (headerInfo: HeaderInfo) => void;
 }
@@ -24,7 +24,8 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
 
   return (
     <div className="flex h-80 w-80 flex-col gap-3 border-2 p-2">
-      <input
+      <h1 className="text-xl font-bold">Personal Details</h1>
+      <Input
         type="text"
         id="name"
         onChange={updateInfo}
