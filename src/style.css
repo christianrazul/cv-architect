@@ -715,6 +715,10 @@ video {
   width: 100%;
 }
 
+.w-36 {
+  width: 9rem;
+}
+
 .border-collapse {
   border-collapse: collapse;
 }

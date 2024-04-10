@@ -28,7 +28,7 @@ export const schema = z.object({
   role: z.string(),
   startDate: z.date(),
   endDate: z.date(),
-  description: z.string().array(),
+  description: z.string(),
 });
 
 interface WorkHistoryFormProps {
@@ -138,12 +138,12 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-40 pl-3 text-left font-normal",
+                            "w-36 pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground",
                           )}
                         >
                           {field.value ? (
-                            format(field.value, "PPP")
+                            format(field.value, "P")
                           ) : (
                             <span>Pick a date</span>
                           )}
@@ -179,12 +179,12 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "w-40 pl-3 text-left font-normal",
+                            "w-36 pl-3 text-left font-normal",
                             !field.value && "text-muted-foreground",
                           )}
                         >
                           {field.value ? (
-                            format(field.value, "PPP")
+                            format(field.value, "P")
                           ) : (
                             <span>Pick a date</span>
                           )}
