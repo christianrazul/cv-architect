@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { HeaderInfo } from "./Header";
-import { defaultHeaderInfo } from "../App";
+import { defaultValues } from "../App";
 import { Input } from "../../components/ui/input";
 interface HeaderFormProps {
   onHeaderInfo: (headerInfo: HeaderInfo) => void;
 }
 
 const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
-  const [headerInfo, setHeaderInfo] = useState<HeaderInfo>(defaultHeaderInfo);
+  const [headerInfo, setHeaderInfo] = useState<HeaderInfo>(
+    defaultValues.header,
+  );
 
   const updateInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
     const updateInfo = {
