@@ -21,7 +21,6 @@ function App() {
   const [summaryInfo, setSummaryInfo] = useState(defaultValues.summary);
   const [workHistoryInfo, setWorkHistoryInfo] = useState([] as any[]);
 
-  console.log(workHistoryInfo);
   return (
     <div className="flex gap-4 p-4">
       <div className="flex flex-col gap-4">

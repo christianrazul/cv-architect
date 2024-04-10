@@ -11,8 +11,8 @@ const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
         WORK HISTORY
       </h1>
       <div className="flex w-full flex-col">
-        {workHistory.map((work) => (
-          <div key={work.company} className="flex w-full flex-col">
+        {workHistory.map((work, index) => (
+          <div key={index} className="flex w-full flex-col">
             <h2>{work.company}</h2>
             <p>{work.address}</p>
             <p>

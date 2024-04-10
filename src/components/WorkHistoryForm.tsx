@@ -28,7 +28,7 @@ export const schema = z.object({
   role: z.string(),
   startDate: z.date(),
   endDate: z.date(),
-  description: z.string(),
+  description: z.string().array(),
 });
 
 interface WorkHistoryFormProps {
@@ -48,10 +48,8 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
 
   // function that handles the form submission
   const onSubmit = (values: z.infer<typeof schema>) => {
-    console.log(values);
     // add the work history to the existing workHistory state
     setWorkHistory([...workHistory, values]);
-    console.log(workHistory);
   };
 
   useEffect(() => {
@@ -71,7 +69,7 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
               <FormItem>
                 <FormLabel>Company</FormLabel>
                 <FormControl>
-                  <Input placeholder="Turnkey Processing" {...field} />
+                  <Input placeholder="Company Name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -97,12 +95,36 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
               <FormItem>
                 <FormLabel>Role</FormLabel>
                 <FormControl>
-                  <Input placeholder="Social Media Manager" {...field} />
+                  <Input placeholder="Software Engineer" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex items-center justify-between">
+                  <FormLabel>Description</FormLabel>
+                  <Button
+                    type="button"
+                    variant={"link"}
+                    className="h-auto py-0"
+                  >
+                    Add..
+                  </Button>
+                </div>
+
+                <FormControl>
+                  <Input placeholder="Role responsibility..." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Date pickers */}
           <div className="flex gap-4">
             <FormField
               control={form.control}
@@ -187,20 +209,6 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
               )}
             />
           </div>
-
-          <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Description</FormLabel>
-                <FormControl>
-                  <Input placeholder="Created and Enhanced..." {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
           <Button type="submit" variant="outline">
             Add
