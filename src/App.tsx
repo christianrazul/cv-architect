@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./style.css";
 import HeaderForm from "./components/HeaderForm";
 import Resume from "./components/Resume";
