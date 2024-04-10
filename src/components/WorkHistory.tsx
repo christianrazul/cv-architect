@@ -10,10 +10,10 @@ const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
       <h1 className=" bg-orange-400 py-1 pl-4 text-xl font-bold">
         WORK HISTORY
       </h1>
-      <div className="flex w-full flex-col p-4">
+      <div className="flex w-full flex-col px-4">
         {workHistory.map((work, index) => (
           <div key={index} className="flex w-full flex-col">
-            <div className="flex justify-between">
+            <div className="flex justify-between pt-2">
               <div className="flex gap-2">
                 <h2 className="font-bold">{work.company}</h2>
                 <h2>| {work.address}</h2>

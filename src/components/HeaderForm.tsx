@@ -25,7 +25,7 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
   }, [headerInfo]);
 
   return (
-    <div className="flex w-80 flex-col gap-3 rounded-md border p-4 pb-4 shadow-md">
+    <div className="flex w-full flex-col gap-3 rounded-md border p-4 pb-4 shadow-md">
       <h1 className="text-xl font-bold">Personal Details</h1>
       <Input
         type="text"

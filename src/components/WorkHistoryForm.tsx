@@ -52,7 +52,9 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
       role: "Software Developer",
       startDate: new Date("2021-01-01"),
       endDate: new Date(),
-      description: ["Create and Build Web Applications"],
+      description: Array(descriptionCount).fill(
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque illum quasi maiores est quam dolorem officia suscipit voluptatem consequatur vero?",
+      ),
     },
   });
 
@@ -60,6 +62,9 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
   const onSubmit = (values: z.infer<typeof schema>) => {
     // add the work history to the existing workHistory state
     setWorkHistory([...workHistory, values]);
+
+    // reset the form
+    form.reset();
   };
 
   useEffect(() => {
@@ -148,29 +153,6 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
               )}
             />
           ))}
-          {/* <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem>
-                <div className="flex items-center justify-between">
-                  <FormLabel>Description</FormLabel>
-                  <Button
-                    type="button"
-                    variant={"link"}
-                    className="h-auto py-0"
-                  >
-                    Add..
-                  </Button>
-                </div>
-
-                <FormControl>
-                  <Input placeholder="Role responsibility..." {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          /> */}
           {/* Date pickers */}
           <div className="flex gap-4">
             <FormField
@@ -257,7 +239,7 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
             />
           </div>
 
-          <Button type="submit" variant="outline">
+          <Button type="submit" variant="outline" className="self-end">
             Add
           </Button>
         </form>

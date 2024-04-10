@@ -10,7 +10,7 @@ interface ResumeProps {
 
 const Resume = ({ header, summary, workHistory }: ResumeProps) => {
   return (
-    <div className=" flex w-full flex-col gap-2 border px-4">
+    <div className=" flex w-full flex-col gap-2 rounded-sm border px-4 shadow-md">
       <Header
         name={header.name}
         email={header.email}
