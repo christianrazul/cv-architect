@@ -18,7 +18,7 @@ const SummaryForm = ({ onSummary }: SummaryFormProps) => {
       <h1 className="text-xl font-bold">Professional Summary</h1>
       <Textarea
         id="summary"
-        placeholder="I am a full stack developer"
+        placeholder="Briefly describe yourself in a few sentences..."
         onChange={(e) => setSummary(e.target.value)}
       />
     </div>

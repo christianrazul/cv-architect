@@ -1,5 +1,6 @@
 import Summary from "./Summary";
 import Header, { HeaderInfo } from "./Header";
+import WorkHistory from "./WorkHistory";
 
 interface ResumeProps {
   header: HeaderInfo;
@@ -8,7 +9,7 @@ interface ResumeProps {
 
 const Resume = ({ header, summary }: ResumeProps) => {
   return (
-    <div className=" flex w-full flex-col gap-2 border">
+    <div className=" flex w-full flex-col gap-2 border px-4">
       <Header
         name={header.name}
         email={header.email}
@@ -16,6 +17,7 @@ const Resume = ({ header, summary }: ResumeProps) => {
         address={header.address}
       />
       <Summary summary={summary} />
+      <WorkHistory />
     </div>
   );
 };

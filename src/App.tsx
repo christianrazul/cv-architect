@@ -3,6 +3,7 @@ import "./style.css";
 import HeaderForm from "./components/HeaderForm";
 import Resume from "./components/Resume";
 import SummaryForm from "./components/SummaryForm";
+import WorkHistoryForm from "./components/WorkHistoryForm";
 
 export const defaultValues = {
   header: {
@@ -12,8 +13,9 @@ export const defaultValues = {
     address: "Davao City, Philippines",
   },
   summary:
-    "I am a full stack developer Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, libero!",
+    "I am a full stack developer Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, libero! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est, dolore temporibus nesciunt delectus assumenda recusandae!",
 };
+
 function App() {
   const [headerInfo, setHeaderInfo] = useState(defaultValues.header);
   const [summaryInfo, setSummaryInfo] = useState(defaultValues.summary);
@@ -22,6 +24,7 @@ function App() {
       <div className="flex flex-col gap-4">
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
+        <WorkHistoryForm />
       </div>
       <Resume header={{ ...headerInfo }} summary={summaryInfo} />
     </div>
