@@ -41,6 +41,8 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
     [] as z.infer<typeof schema>[],
   );
 
+  const [descriptionCount, setDescriptionCount] = useState(1);
+
   // form hook
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -65,11 +67,16 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
     onWorkHistory([...workHistory]);
   }, [workHistory]);
 
+  const addDescriptionField = () => {
+    setDescriptionCount(descriptionCount + 1);
+  };
+
   return (
     <div className="rounded-md border p-4 shadow-md">
       <h1 className="text-xl font-bold">Work History</h1>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 py-2">
+          {/* Company Name */}
           <FormField
             control={form.control}
             name="company"
@@ -83,6 +90,7 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
               </FormItem>
             )}
           />
+          {/* Address */}
           <FormField
             control={form.control}
             name="address"
@@ -96,6 +104,7 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
               </FormItem>
             )}
           />
+          {/* Role */}
           <FormField
             control={form.control}
             name="role"
@@ -109,7 +118,37 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
               </FormItem>
             )}
           />
-          <FormField
+          {/* Descriptions */}
+          {Array.from({ length: descriptionCount }, (_, index) => (
+            <FormField
+              key={index}
+              control={form.control}
+              name={`description.${index}`}
+              render={({ field }) => (
+                <FormItem>
+                  {index === 0 && (
+                    <div className="flex items-center justify-between">
+                      <FormLabel>Description</FormLabel>
+                      <Button
+                        type="button"
+                        variant={"link"}
+                        className="h-auto py-0"
+                        onClick={addDescriptionField}
+                      >
+                        Add..
+                      </Button>
+                    </div>
+                  )}
+
+                  <FormControl>
+                    <Input placeholder="Description" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          ))}
+          {/* <FormField
             control={form.control}
             name="description"
             render={({ field }) => (
@@ -131,7 +170,7 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> */}
           {/* Date pickers */}
           <div className="flex gap-4">
             <FormField

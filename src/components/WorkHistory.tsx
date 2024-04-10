@@ -14,9 +14,10 @@ const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
         {workHistory.map((work, index) => (
           <div key={index} className="flex w-full flex-col">
             <div className="flex justify-between">
-              <h2 className="font-bold ">
-                {work.company} | {work.address}
-              </h2>
+              <div className="flex gap-2">
+                <h2 className="font-bold">{work.company}</h2>
+                <h2>| {work.address}</h2>
+              </div>
               <p>
                 {work.startDate.toLocaleDateString("en-US", {
                   month: "long",
@@ -30,7 +31,11 @@ const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
               </p>
             </div>
             <p className="mb-1 font-bold text-primary">{work.role}</p>
-            <p>{work.description}</p>
+            <ul>
+              {work.description.map((desc, index) => {
+                return <li key={index}>• {desc}</li>;
+              })}
+            </ul>
           </div>
         ))}
       </div>
