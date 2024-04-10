@@ -5,9 +5,10 @@ import WorkHistory from "./WorkHistory";
 interface ResumeProps {
   header: HeaderInfo;
   summary: string;
+  workHistory: any[];
 }
 
-const Resume = ({ header, summary }: ResumeProps) => {
+const Resume = ({ header, summary, workHistory }: ResumeProps) => {
   return (
     <div className=" flex w-full flex-col gap-2 border px-4">
       <Header
@@ -17,7 +18,7 @@ const Resume = ({ header, summary }: ResumeProps) => {
         address={header.address}
       />
       <Summary summary={summary} />
-      <WorkHistory />
+      <WorkHistory workHistory={[...workHistory]} />
     </div>
   );
 };

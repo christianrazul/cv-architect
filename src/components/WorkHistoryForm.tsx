@@ -5,14 +5,12 @@ import { Button } from "../../components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "../../components/ui/form";
 import { Input } from "../../components/ui/input";
-
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "../../lib/utils";
@@ -22,8 +20,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../components/ui/popover";
+import { useEffect, useState } from "react";
 
-const schema = z.object({
+export const schema = z.object({
   company: z.string(),
   address: z.string(),
   role: z.string(),
@@ -32,22 +31,33 @@ const schema = z.object({
   description: z.string(),
 });
 
-const WorkHistoryForm = () => {
+interface WorkHistoryFormProps {
+  onWorkHistory: (data: z.infer<typeof schema>[]) => void;
+}
+
+const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
+  // state that holds the work histories in an array
+  const [workHistory, setWorkHistory] = useState(
+    [] as z.infer<typeof schema>[],
+  );
+
+  // form hook
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      company: "",
-      address: "",
-      role: "",
-      startDate: new Date(),
-      endDate: new Date(),
-      description: "",
-    },
   });
 
+  // function that handles the form submission
   const onSubmit = (values: z.infer<typeof schema>) => {
     console.log(values);
+    // add the work history to the existing workHistory state
+    setWorkHistory([...workHistory, values]);
+    console.log(workHistory);
   };
+
+  useEffect(() => {
+    // call the onWorkHistory prop with the updated workHistory state
+    onWorkHistory([...workHistory]);
+  }, [workHistory]);
 
   return (
     <div className="border-2 p-4">

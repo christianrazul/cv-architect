@@ -19,14 +19,21 @@ export const defaultValues = {
 function App() {
   const [headerInfo, setHeaderInfo] = useState(defaultValues.header);
   const [summaryInfo, setSummaryInfo] = useState(defaultValues.summary);
+  const [workHistoryInfo, setWorkHistoryInfo] = useState([] as any[]);
+
+  console.log(workHistoryInfo);
   return (
     <div className="flex gap-4 p-4">
       <div className="flex flex-col gap-4">
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
-        <WorkHistoryForm />
+        <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
       </div>
-      <Resume header={{ ...headerInfo }} summary={summaryInfo} />
+      <Resume
+        header={{ ...headerInfo }}
+        summary={summaryInfo}
+        workHistory={[...workHistoryInfo]}
+      />
     </div>
   );
 }
