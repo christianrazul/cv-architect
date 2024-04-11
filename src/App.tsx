@@ -4,6 +4,7 @@ import HeaderForm from "./components/HeaderForm";
 import Resume from "./components/Resume";
 import SummaryForm from "./components/SummaryForm";
 import WorkHistoryForm from "./components/WorkHistoryForm";
+import SkillsForm from "./components/SkillsForm";
 
 export const defaultValues = {
   header: {
@@ -26,6 +27,7 @@ function App() {
       <div className="flex flex-col gap-4">
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
+        <SkillsForm />
         <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
       </div>
       <Resume
