@@ -1,16 +1,11 @@
 import { z } from "zod";
 import { schema } from "./SkillsForm";
-import { useEffect } from "react";
 
 interface SkillsProps {
   skills: z.infer<typeof schema>;
 }
 
 const Skills = ({ skills }: SkillsProps) => {
-  useEffect(() => {
-    console.log("Skills have been edited");
-  }, [skills]);
-
   return (
     <div className="w-full">
       <h1 className=" bg-yellow-400 py-1 pl-4 text-xl font-bold">SKILLS</h1>

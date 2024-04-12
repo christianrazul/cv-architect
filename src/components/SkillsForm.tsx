@@ -69,7 +69,6 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
         <form
           onSubmit={handleSubmit((data) => {
             onSkills(data);
-            console.log("Submit data", data);
           })}
           className="space-y-2 py-2"
         >

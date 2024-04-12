@@ -743,6 +743,10 @@ video {
   justify-content: space-between;
 }
 
+.gap-1 {
+  gap: 0.25rem;
+}
+
 .gap-2 {
   gap: 0.5rem;
 }
@@ -753,10 +757,6 @@ video {
 
 .gap-4 {
   gap: 1rem;
-}
-
-.gap-1 {
-  gap: 0.25rem;
 }
 
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
@@ -825,6 +825,11 @@ video {
 
 .bg-destructive {
   background-color: hsl(var(--destructive));
+}
+
+.bg-green-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity));
 }
 
 .bg-orange-300 {
@@ -1038,10 +1043,6 @@ video {
 
 .ring-offset-background {
   --tw-ring-offset-color: hsl(var(--background));
-}
-
-.filter {
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .transition-colors {

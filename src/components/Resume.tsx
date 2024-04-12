@@ -4,6 +4,7 @@ import WorkHistory from "./WorkHistory";
 import Skills from "./Skills";
 import { z } from "zod";
 import { schema } from "./SkillsForm";
+import Education from "./Education";
 
 interface ResumeProps {
   header: HeaderInfo;
@@ -26,6 +27,7 @@ const Resume = ({ header, summary, workHistory, skills }: ResumeProps) => {
         <Summary summary={summary} />
         <Skills skills={skills} />
         <WorkHistory workHistory={[...workHistory]} />
+        <Education />
       </div>
     </div>
   );
