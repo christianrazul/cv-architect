@@ -26,8 +26,8 @@ const Resume = ({
   education,
 }: ResumeProps) => {
   return (
-    <div className="flex w-full rounded-sm border shadow-md">
-      <div className="w-60 bg-primary p-4"></div>
+    <div className="flex h-[1000px] w-[800px] rounded-sm border bg-white p-8 shadow-xl">
+      {/* <div className="w-60 bg-primary p-4"></div> */}
       <div className=" flex w-full flex-col gap-2 px-4 ">
         <Header header={{ ...header }} />
         <Summary summary={{ ...summary }} />

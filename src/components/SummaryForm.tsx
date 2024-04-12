@@ -44,7 +44,7 @@ const SummaryForm = ({ onSummary }: SummaryFormProps) => {
 
   return (
     <Collapsible
-      className="rounded-md border p-4 shadow-md"
+      className="rounded-md border bg-white p-4 shadow-md"
       open={isOpen}
       onOpenChange={setIsOpen}
     >

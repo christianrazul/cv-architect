@@ -39,7 +39,7 @@ interface HeaderFormProps {
 }
 
 const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const form = useForm<HeaderData>({
     resolver: zodResolver(HeaderSchema),
@@ -50,7 +50,7 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
 
   return (
     <Collapsible
-      className="rounded-md border p-4 shadow-md"
+      className=" rounded-md border bg-white p-4 shadow-md"
       open={isOpen}
       onOpenChange={setIsOpen}
     >

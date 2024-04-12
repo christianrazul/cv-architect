@@ -25,17 +25,23 @@ import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { format } from "date-fns";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export const WorkHistorySchema = z.object({
   workInfo: z
     .object({
-      company: z.string(),
+      company: z.string().min(1, {
+        message: "Company name is required",
+      }),
       address: z.string(),
-      role: z.string(),
+      role: z.string().min(1, {
+        message: "Role is required",
+      }),
       startDate: z.date(),
       endDate: z.date(),
-      description: z.string().array().min(1),
+      description: z.string().array().min(1, {
+        message: "At least 1 job responsibility is required",
+      }),
     })
     .array(),
 });
@@ -55,11 +61,7 @@ interface WorkHistoryFormProps {
 }
 
 const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
-  // state that holds the work histories in an array
-  const [workHistory, setWorkHistory] = useState(
-    [] as z.infer<typeof WorkHistorySchema>[],
-  );
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [descriptionCount, setDescriptionCount] = useState(1);
 
   const form = useForm<WorkHistoryData>({
@@ -69,30 +71,12 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
     },
   });
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = form;
+  const { control, handleSubmit } = form;
 
   const { fields, append, remove } = useFieldArray({
     name: "workInfo",
     control,
   });
-
-  // function that handles the form submission
-  // const onSubmit = (values: WorkHistoryData) => {
-  //   // add the work history to the existing workHistory state
-  //   setWorkHistory([...workHistory, values]);
-
-  //   // reset the form
-  //   form.reset();
-  // };
-
-  // useEffect(() => {
-  //   // call the onWorkHistory prop with the updated workHistory state
-  //   onWorkHistory([...workHistory]);
-  // }, [workHistory]);
 
   const addDescriptionField = () => {
     setDescriptionCount(descriptionCount + 1);
@@ -100,7 +84,7 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
 
   return (
     <Collapsible
-      className="rounded-md border p-4 shadow-md"
+      className="rounded-md border bg-white p-4 shadow-md"
       open={isOpen}
       onOpenChange={setIsOpen}
     >
@@ -153,7 +137,10 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
                           </Button>
                         </div>
                         <FormControl>
-                          <Input placeholder="Company Name" {...field} />
+                          <Input
+                            placeholder="Enter the company's name"
+                            {...field}
+                          />
                         </FormControl>
 
                         <FormMessage />
@@ -168,7 +155,10 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
                       <FormItem>
                         <FormLabel>Address</FormLabel>
                         <FormControl>
-                          <Input placeholder="Davao City" {...field} />
+                          <Input
+                            placeholder="Enter the company's location"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -182,7 +172,10 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
                       <FormItem>
                         <FormLabel>Role</FormLabel>
                         <FormControl>
-                          <Input placeholder="Software Engineer" {...field} />
+                          <Input
+                            placeholder="Enter your Role/Job Title"
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

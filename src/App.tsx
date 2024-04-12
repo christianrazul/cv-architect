@@ -47,8 +47,8 @@ function App() {
   });
 
   return (
-    <div className="flex gap-4 p-4 ">
-      <div className="flex flex-col gap-4">
+    <div className="flex h-screen w-full justify-center gap-16 bg-gray-100 p-32 align-middle">
+      <div className="flex flex-col flex-wrap gap-4">
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
         <SkillsForm onSkills={(skill) => setSkillsList(skill)} />
