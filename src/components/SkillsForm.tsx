@@ -78,7 +78,7 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
             />
           ))}
 
-          <Button type="submit" variant="default" className="self-end">
+          <Button type="submit" variant="outline" className="self-end">
             Add
           </Button>
         </form>
