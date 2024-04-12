@@ -1,52 +1,143 @@
-import React, { useEffect, useState } from "react";
-import { HeaderInfo } from "./Header";
-import { defaultValues } from "../App";
+import React, { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import { Button } from "./ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./ui/collapsible";
+import { ChevronDown, ChevronUp } from "lucide-react";
+
+const HeaderSchema = z.object({
+  fullName: z.string().min(1, "Name cannot be empty"),
+  email: z.string().email(),
+  contact: z.string(),
+  address: z.string(),
+});
+
+export type HeaderData = z.infer<typeof HeaderSchema>;
+
+export const headerDefaultValues = {
+  fullName: "",
+  email: "",
+  contact: "",
+  address: "",
+};
 interface HeaderFormProps {
-  onHeaderInfo: (headerInfo: HeaderInfo) => void;
+  onHeaderInfo: (headerInfo: HeaderData) => void;
 }
 
 const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
-  const [headerInfo, setHeaderInfo] = useState<HeaderInfo>(
-    defaultValues.header,
-  );
+  // const [headerInfo, setHeaderInfo] = useState<HeaderData>(headerDefaultValues);
+  const [isOpen, setIsOpen] = useState(true);
 
-  const updateInfo = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const updateInfo = {
-      ...headerInfo,
-      [event.target.id]: event.target.value,
-    };
-    setHeaderInfo(updateInfo);
-  };
+  const form = useForm<HeaderData>({
+    resolver: zodResolver(HeaderSchema),
+    defaultValues: headerDefaultValues,
+  });
 
-  // pass the headerInfo to the parent component every time there is a change
-  useEffect(() => {
-    onHeaderInfo({ ...headerInfo });
-  }, [headerInfo]);
+  const { handleSubmit, control } = form;
 
   return (
-    <div className="flex w-full flex-col gap-3 rounded-md border p-4 pb-4 shadow-md">
-      <h1 className="text-xl font-bold">Personal Details</h1>
-      <Input
-        type="text"
-        id="name"
-        onChange={updateInfo}
-        placeholder="Full Name"
-      />
-      <Input type="text" id="email" onChange={updateInfo} placeholder="Email" />
-      <Input
-        type="text"
-        id="contact"
-        onChange={updateInfo}
-        placeholder="Contact Number"
-      />
-      <Input
-        type="text"
-        id="address"
-        onChange={updateInfo}
-        placeholder="Address"
-      />
-    </div>
+    <Collapsible
+      className="rounded-md border p-4 shadow-md"
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-bold">Personal Information</h1>
+        <CollapsibleTrigger asChild>
+          <Button variant="ghost" size="sm" className="w-9 p-0">
+            {isOpen ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+            <span className="sr-only">Toggle</span>
+          </Button>
+        </CollapsibleTrigger>
+      </div>
+      <CollapsibleContent>
+        <Form {...form}>
+          <form
+            onSubmit={handleSubmit((data) => onHeaderInfo(data))}
+            className="space-y-2 "
+          >
+            <div className="flex flex-col gap-2 py-4">
+              <FormField
+                control={control}
+                name="fullName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your full name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name="contact"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Contact Number</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your contact number"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Address</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter your address" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button variant="default" type="submit">
+              Submit
+            </Button>
+          </form>
+        </Form>
+      </CollapsibleContent>
+    </Collapsible>
   );
 };
 

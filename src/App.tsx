@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./style.css";
-import HeaderForm from "./components/HeaderForm";
+import HeaderForm, { headerDefaultValues } from "./components/HeaderForm";
 import Resume from "./components/Resume";
 import SummaryForm from "./components/SummaryForm";
 import WorkHistoryForm from "./components/WorkHistoryForm";
@@ -12,18 +12,22 @@ import EducationForm, {
 } from "./components/EducationForm";
 
 export const defaultValues = {
-  header: {
-    name: "Rudolph Christian Razul",
-    email: "razulchristian@gmail.com",
-    contact: "09164782075",
-    address: "Davao City, Philippines",
-  },
+  header: headerDefaultValues,
   summary:
     "I am a full stack developer Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, libero! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est, dolore temporibus nesciunt delectus assumenda recusandae!",
 };
 
+const exampleResume = {
+  header: {
+    fullName: "Rudolph Christian R. Razul",
+    email: "razulchristian@gmail.com",
+    contact: "09167482075",
+    address: "Davao City",
+  },
+};
+
 function App() {
-  const [headerInfo, setHeaderInfo] = useState(defaultValues.header);
+  const [headerInfo, setHeaderInfo] = useState(exampleResume.header);
   const [summaryInfo, setSummaryInfo] = useState(defaultValues.summary);
   const [workHistoryInfo, setWorkHistoryInfo] = useState([] as any[]);
   const [skillsList, setSkillsList] = useState<z.infer<typeof schema>>({
