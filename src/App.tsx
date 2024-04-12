@@ -4,7 +4,8 @@ import HeaderForm from "./components/HeaderForm";
 import Resume from "./components/Resume";
 import SummaryForm from "./components/SummaryForm";
 import WorkHistoryForm from "./components/WorkHistoryForm";
-import SkillsForm from "./components/SkillsForm";
+import SkillsForm, { schema } from "./components/SkillsForm";
+import { z } from "zod";
 
 export const defaultValues = {
   header: {
@@ -21,19 +22,23 @@ function App() {
   const [headerInfo, setHeaderInfo] = useState(defaultValues.header);
   const [summaryInfo, setSummaryInfo] = useState(defaultValues.summary);
   const [workHistoryInfo, setWorkHistoryInfo] = useState([] as any[]);
+  const [skillsList, setSkillsList] = useState<z.infer<typeof schema>>({
+    skills: [""],
+  });
 
   return (
     <div className="flex gap-4 p-4">
       <div className="flex flex-col gap-4">
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
-        <SkillsForm />
+        <SkillsForm onSkills={(skill) => setSkillsList(skill)} />
         <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
       </div>
       <Resume
         header={{ ...headerInfo }}
         summary={summaryInfo}
         workHistory={[...workHistoryInfo]}
+        skills={{ ...skillsList }}
       />
     </div>
   );

@@ -2,14 +2,17 @@ import Summary from "./Summary";
 import Header, { HeaderInfo } from "./Header";
 import WorkHistory from "./WorkHistory";
 import Skills from "./Skills";
+import { z } from "zod";
+import { schema } from "./SkillsForm";
 
 interface ResumeProps {
   header: HeaderInfo;
   summary: string;
   workHistory: any[];
+  skills: z.infer<typeof schema>;
 }
 
-const Resume = ({ header, summary, workHistory }: ResumeProps) => {
+const Resume = ({ header, summary, workHistory, skills }: ResumeProps) => {
   return (
     <div className="flex w-full rounded-sm border shadow-md">
       <div className="w-60 bg-primary p-4"></div>
@@ -21,7 +24,7 @@ const Resume = ({ header, summary, workHistory }: ResumeProps) => {
           address={header.address}
         />
         <Summary summary={summary} />
-        <Skills />
+        <Skills skills={skills} />
         <WorkHistory workHistory={[...workHistory]} />
       </div>
     </div>
