@@ -679,6 +679,10 @@ video {
   height: auto;
 }
 
+.h-0 {
+  height: 0px;
+}
+
 .min-h-\[80px\] {
   min-height: 80px;
 }
@@ -1016,6 +1020,11 @@ video {
 
 .text-secondary-foreground {
   color: hsl(var(--secondary-foreground));
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .underline-offset-4 {

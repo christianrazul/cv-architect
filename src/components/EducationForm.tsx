@@ -20,11 +20,21 @@ import { cn } from "@/lib/utils";
 const EducationSchema = z.object({
   school: z
     .object({
-      name: z.string(),
-      course: z.string(),
+      name: z
+        .string({
+          required_error: "School name is required",
+          invalid_type_error: "School name must be a string",
+        })
+        .min(1, "School name is required"),
+      location: z.string(),
+      degree: z
+        .string({
+          required_error: "Degree is required",
+          invalid_type_error: "Degree must be a string",
+        })
+        .min(1, "Degree is required"),
       startDate: z.date(),
       endDate: z.date(),
-      achievements: z.array(z.string()),
     })
     .array(),
 });
@@ -33,10 +43,10 @@ export type EducationFormData = z.infer<typeof EducationSchema>;
 
 const defaultValues = {
   name: "",
-  course: "",
+  location: "",
+  degree: "",
   startDate: new Date(),
   endDate: new Date(),
-  achievements: [""],
 };
 
 interface EducationFormProps {
@@ -84,28 +94,56 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
         >
           {fields.map((field, index) => {
             return (
-              <div key={field.id}>
+              <div key={field.id} className="flex flex-col gap-2">
                 {/* School Name Field */}
                 <FormField
                   name={`school.${index}.name`}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>School Name</FormLabel>
+                      <div className="flex justify-between">
+                        <FormLabel>School</FormLabel>
+                        <Button
+                          variant="link"
+                          onClick={() => remove(index)}
+                          className="h-0 text-red-500"
+                        >
+                          Remove
+                        </Button>
+                      </div>
                       <FormControl>
-                        <Input placeholder="Ateneo" {...field} />
+                        <Input
+                          placeholder="Enter School/University"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                {/* Course Field */}
+                {/* Location Field */}
                 <FormField
-                  name={`school.${index}.course`}
+                  name={`school.${index}.location`}
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Course</FormLabel>
+                      <FormLabel>School Location</FormLabel>
                       <FormControl>
-                        <Input placeholder="Computer Science" {...field} />
+                        <Input placeholder="Enter Location" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Degree Field */}
+                <FormField
+                  name={`school.${index}.degree`}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Degree</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Enter Degree/Field of study"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -202,7 +240,6 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
                     )}
                   />
                 </div>
-                {/* Achievements Field/s */}
               </div>
             );
           })}
