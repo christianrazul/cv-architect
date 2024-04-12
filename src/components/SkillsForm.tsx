@@ -8,25 +8,33 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { Trash } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 
 export const schema = z.object({
-  skills: z.array(z.string()),
+  skills: z
+    .object({
+      skill: z.string(),
+    })
+    .array(),
 });
 
+type SkillsFormData = z.infer<typeof schema>;
+
 interface SkillsFormProps {
-  onSkills: (data: z.infer<typeof schema>) => void;
+  onSkills: (data: SkillsFormData) => void;
 }
 
 const SkillsForm = ({ onSkills }: SkillsFormProps) => {
-  const [skillsCount, setSkillsCount] = useState(1);
-
-  const form = useForm<z.infer<typeof schema>>({
+  const form = useForm<SkillsFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
-      skills: [""],
+      skills: [
+        {
+          skill: "",
+        },
+      ],
     },
   });
 
@@ -36,19 +44,10 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
     formState: { errors },
   } = form;
 
-  // const { fields, append, remove } = useFieldArray({
-  //   control,
-  //   name: "skills",
-  // });
-
-  const onSubmit = (values: z.infer<typeof schema>) => {
-    console.log(values);
-    onSkills(values);
-  };
-
-  const addSkillFields = () => {
-    setSkillsCount((previous) => previous + 1);
-  };
+  const { fields, append, remove } = useFieldArray({
+    name: "skills",
+    control,
+  });
 
   return (
     <div className="rounded-md border p-4 shadow-md">
@@ -57,37 +56,102 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
           <h1 className="text-xl font-bold">Skills</h1>
           <Button
             type="button"
-            variant={"link"}
-            className="h-auto py-0"
-            onClick={addSkillFields}
+            onClick={() => {
+              append({
+                skill: "",
+              });
+            }}
+            variant="link"
           >
             Add..
           </Button>
         </div>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 py-2">
-          {Array.from({ length: skillsCount }, (_, index) => (
-            <FormField
-              key={index}
-              control={control}
-              name={`skills.${index}`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Input placeholder="TypeScript.." {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
+        <form
+          onSubmit={handleSubmit((data) => {
+            onSkills(data);
+            console.log("Submit data", data);
+          })}
+          className="space-y-2 py-2"
+        >
+          {fields.map((field, index) => {
+            return (
+              <FormField
+                key={field.id}
+                name={`skills.${index}.skill`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <div className="flex gap-1">
+                        <Input placeholder="TypeScript.." {...field} />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          onClick={() => remove(index)}
+                        >
+                          <Trash className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            );
+          })}
 
+          <p>{errors.skills?.root?.message}</p>
           <Button type="submit" variant="outline" className="self-end">
-            Add
+            Submit
           </Button>
         </form>
       </Form>
     </div>
   );
+
+  // return (
+  //   <div className="rounded-md border p-4 shadow-md">
+  //     <Form {...form}>
+  //       <div className="flex items-center justify-between">
+  //         <h1 className="text-xl font-bold">Skills</h1>
+  //         <Button
+  //           type="button"
+  //           variant={"link"}
+  //           className="h-auto py-0"
+  //           onClick={addSkillFields}
+  //         >
+  //           Add..
+  //         </Button>
+  //       </div>
+  //       <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 py-2">
+  //         {Array.from({ length: skillsCount }, (_, index) => (
+  //           <FormField
+  //             key={index}
+  //             control={control}
+  //             name={`skills.${index}`}
+  //             render={({ field }) => (
+  //               <FormItem>
+  //                 <FormControl>
+  //                   <div className="flex gap-1">
+  //                     <Input placeholder="TypeScript.." {...field} />
+  //                     <Button type="button" variant="destructive" size="icon">
+  //                       <Trash className="h-4 w-4" />
+  //                     </Button>
+  //                   </div>
+  //                 </FormControl>
+  //                 <FormMessage />
+  //               </FormItem>
+  //             )}
+  //           />
+  //         ))}
+
+  //         <Button type="submit" variant="outline" className="self-end">
+  //           Submit
+  //         </Button>
+  //       </form>
+  //     </Form>
+  //   </div>
+  // );
 };
 
 export default SkillsForm;
