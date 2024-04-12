@@ -41,6 +41,7 @@ const EducationSchema = z.object({
         .min(1, "Degree is required"),
       startDate: z.date(),
       endDate: z.date(),
+      achievements: z.array(z.string()).min(1),
     })
     .array(),
 });
@@ -53,14 +54,15 @@ export const EducationDefaultValues = {
   degree: "",
   startDate: new Date(),
   endDate: new Date(),
+  achievements: ["", "", "", "", ""],
 };
-
 interface EducationFormProps {
   onEducation: (data: EducationFormData) => void;
 }
 
 const EducationForm = ({ onEducation }: EducationFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [achievementCount, setAchievementCount] = useState(1);
 
   const form = useForm({
     resolver: zodResolver(EducationSchema),
@@ -263,6 +265,38 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
                       )}
                     />
                   </div>
+                  {Array.from({ length: achievementCount }, (_, arrayIndex) => (
+                    <FormField
+                      key={arrayIndex}
+                      control={control}
+                      name={`school.${index}.achievements.${arrayIndex}`}
+                      render={({ field }) => (
+                        <FormItem>
+                          {arrayIndex === 0 && (
+                            <div className="flex items-center justify-between">
+                              <FormLabel>Achievements</FormLabel>
+                              <Button
+                                type="button"
+                                variant={"link"}
+                                className="h-auto py-0"
+                                onClick={() =>
+                                  setAchievementCount((prev) => prev + 1)
+                                }
+                                disabled={achievementCount === 5 ? true : false}
+                              >
+                                Add..
+                              </Button>
+                            </div>
+                          )}
+
+                          <FormControl>
+                            <Input placeholder="Achievement" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ))}
                 </div>
               );
             })}
