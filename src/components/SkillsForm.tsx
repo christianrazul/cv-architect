@@ -29,7 +29,7 @@ export const schema = z.object({
     .array(),
 });
 
-type SkillsFormData = z.infer<typeof schema>;
+export type SkillsFormData = z.infer<typeof schema>;
 
 interface SkillsFormProps {
   onSkills: (data: SkillsFormData) => void;

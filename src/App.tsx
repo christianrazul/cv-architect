@@ -7,8 +7,7 @@ import WorkHistoryForm, {
   WorkHistoryData,
   workHistoryDefaultValues,
 } from "./components/WorkHistoryForm";
-import SkillsForm, { schema } from "./components/SkillsForm";
-import { z } from "zod";
+import SkillsForm, { SkillsFormData } from "./components/SkillsForm";
 import EducationForm, {
   EducationDefaultValues,
   EducationFormData,
@@ -31,19 +30,78 @@ const exampleResume = {
     summary:
       "Recent Computer Science graduate proficient in the ReactJS framework and modern web technologies. Skilled in developing responsive, user-friendly websites and applications. Demonstrates strong problem-solving abilities and effective communication skills. Eager to apply technical knowledge and innovative solutions in a dynamic web development role.",
   },
+  skills: [
+    { skill: "JavaScript" },
+    { skill: "TypeScript" },
+    { skill: "ReactJS" },
+    { skill: "TailWindCSS" },
+    { skill: "NodeJS" },
+  ],
+  workInfo: [
+    {
+      company: "Tech Innovations Inc.",
+      address: "Tech City, TC 56789",
+      role: "Software Developer",
+      startDate: new Date("2020-01-01"),
+      endDate: new Date("2022-01-01"),
+      description: [
+        "Developed and maintained code for in-house and client websites primarily using HTML, CSS, Sass, JavaScript, and jQuery",
+        "Managed time-sensitive updates, including content changes and database upgrades",
+        "Planned, wrote, and debugged web applications and software with complete accuracy",
+      ],
+    },
+    {
+      company: "Global Tech Solutions",
+      address: "Cyber Town, CT 98765",
+      role: "Senior Developer",
+      startDate: new Date("2022-02-01"),
+      endDate: new Date("2024-01-01"),
+      description: [
+        "Led a team of software developers to drive the successful execution of development projects from concept through delivery",
+        "Participated in the design, development, and testing of software applications",
+        "Reviewed code work for accuracy and functionality",
+      ],
+    },
+  ],
+  school: [
+    {
+      name: "University of Example",
+      location: "Example City, EC",
+      degree: "B.Sc. in Computer Science",
+      startDate: new Date("2016-09-01"),
+      endDate: new Date("2020-06-01"),
+      achievements: [
+        "Graduated Summa Cum Laude",
+        "Dean's List every semester",
+        "Completed a senior project on machine learning algorithms",
+      ],
+    },
+    {
+      name: "Masters Institute of Technology",
+      location: "Techville, TV",
+      degree: "M.Sc. in Artificial Intelligence",
+      startDate: new Date("2021-09-01"),
+      endDate: new Date("2023-06-01"),
+      achievements: [
+        "Published thesis on deep reinforcement learning",
+        "Teaching Assistant for undergraduate machine learning courses",
+        "Co-authored three papers published in peer-reviewed journals",
+      ],
+    },
+  ],
 };
 
 function App() {
   const [headerInfo, setHeaderInfo] = useState(exampleResume.header);
   const [summaryInfo, setSummaryInfo] = useState(exampleResume.summary);
-  const [workHistoryInfo, setWorkHistoryInfo] = useState<WorkHistoryData>({
-    workInfo: [workHistoryDefaultValues],
+  const [skillsList, setSkillsList] = useState<SkillsFormData>({
+    skills: exampleResume.skills,
   });
-  const [skillsList, setSkillsList] = useState<z.infer<typeof schema>>({
-    skills: [],
+  const [workHistoryInfo, setWorkHistoryInfo] = useState<WorkHistoryData>({
+    workInfo: exampleResume.workInfo,
   });
   const [educationList, setEducationList] = useState<EducationFormData>({
-    school: [EducationDefaultValues],
+    school: exampleResume.school,
   });
 
   return (
