@@ -10,13 +10,13 @@ const Skills = ({ skills }: SkillsProps) => {
     <div className="w-full">
       <h1 className=" bg-yellow-400 py-1 pl-4 text-xl font-bold">SKILLS</h1>
       <div className="grid w-full grid-cols-2 p-4">
-        {skills.skills !== undefined && (
-          <ul>
-            {skills.skills.map((skill, index) => (
-              <li key={index}>• {skill !== undefined && skill}</li>
-            ))}
-          </ul>
-        )}
+        <ul>
+          {skills.skills ? (
+            skills.skills.map((skill, index) => <li key={index}>• {skill}</li>)
+          ) : (
+            <li>No skills listed.</li>
+          )}
+        </ul>
       </div>
     </div>
   );

@@ -22,9 +22,9 @@ function App() {
   const [headerInfo, setHeaderInfo] = useState(defaultValues.header);
   const [summaryInfo, setSummaryInfo] = useState(defaultValues.summary);
   const [workHistoryInfo, setWorkHistoryInfo] = useState([] as any[]);
-  const [skillsList, setSkillsList] = useState<z.infer<typeof schema>>({
-    skills: [""],
-  });
+  const [skillsList, setSkillsList] = useState<
+    z.infer<typeof schema> | undefined
+  >();
 
   return (
     <div className="flex gap-4 p-4">
