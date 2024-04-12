@@ -17,7 +17,7 @@ const Skills = ({ skills }: SkillsProps) => {
       <div className="grid w-full grid-cols-2 p-4">
         <ul>
           {/* Check array length and if it's empty, render no skills listed */}
-          {skills.skills.length !== 0 ? (
+          {skills.skills.length !== 0 && skills.skills[0].skill !== "" ? (
             skills.skills.map((skill, index) => (
               <li key={index}>• {skill.skill}</li>
             ))

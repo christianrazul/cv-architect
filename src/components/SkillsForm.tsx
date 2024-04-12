@@ -108,50 +108,6 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
       </Form>
     </div>
   );
-
-  // return (
-  //   <div className="rounded-md border p-4 shadow-md">
-  //     <Form {...form}>
-  //       <div className="flex items-center justify-between">
-  //         <h1 className="text-xl font-bold">Skills</h1>
-  //         <Button
-  //           type="button"
-  //           variant={"link"}
-  //           className="h-auto py-0"
-  //           onClick={addSkillFields}
-  //         >
-  //           Add..
-  //         </Button>
-  //       </div>
-  //       <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 py-2">
-  //         {Array.from({ length: skillsCount }, (_, index) => (
-  //           <FormField
-  //             key={index}
-  //             control={control}
-  //             name={`skills.${index}`}
-  //             render={({ field }) => (
-  //               <FormItem>
-  //                 <FormControl>
-  //                   <div className="flex gap-1">
-  //                     <Input placeholder="TypeScript.." {...field} />
-  //                     <Button type="button" variant="destructive" size="icon">
-  //                       <Trash className="h-4 w-4" />
-  //                     </Button>
-  //                   </div>
-  //                 </FormControl>
-  //                 <FormMessage />
-  //               </FormItem>
-  //             )}
-  //           />
-  //         ))}
-
-  //         <Button type="submit" variant="outline" className="self-end">
-  //           Submit
-  //         </Button>
-  //       </form>
-  //     </Form>
-  //   </div>
-  // );
 };
 
 export default SkillsForm;
