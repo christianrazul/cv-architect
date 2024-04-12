@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Textarea } from "../../components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import { defaultValues } from "../App";
 
 interface SummaryFormProps {

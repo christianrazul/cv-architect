@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { HeaderInfo } from "./Header";
 import { defaultValues } from "../App";
-import { Input } from "../../components/ui/input";
+import { Input } from "@/components/ui/input";
 interface HeaderFormProps {
   onHeaderInfo: (headerInfo: HeaderInfo) => void;
 }
