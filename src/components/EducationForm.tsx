@@ -14,7 +14,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, ChevronDown } from "lucide-react";
+import { CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
@@ -47,7 +47,7 @@ const EducationSchema = z.object({
 
 export type EducationFormData = z.infer<typeof EducationSchema>;
 
-const defaultValues = {
+export const EducationDefaultValues = {
   name: "",
   location: "",
   degree: "",
@@ -60,12 +60,12 @@ interface EducationFormProps {
 }
 
 const EducationForm = ({ onEducation }: EducationFormProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm({
     resolver: zodResolver(EducationSchema),
     defaultValues: {
-      school: [defaultValues],
+      school: [EducationDefaultValues],
     },
   });
 
@@ -90,7 +90,11 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
         <h1 className="text-xl font-bold">Education History</h1>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm" className="w-9 p-0">
-            <ChevronDown className="h-4 w-4" />
+            {isOpen ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
             <span className="sr-only">Toggle</span>
           </Button>
         </CollapsibleTrigger>
@@ -100,6 +104,7 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
           <form
             onSubmit={handleSubmit((data) => {
               console.log(data);
+              onEducation(data);
             })}
             className="space-y-2"
           >
@@ -273,7 +278,7 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
               <Button
                 type="button"
                 onClick={() => {
-                  append(defaultValues);
+                  append(EducationDefaultValues);
                 }}
                 variant="secondary"
               >
