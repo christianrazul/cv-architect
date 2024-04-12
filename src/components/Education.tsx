@@ -7,8 +7,10 @@ interface EducationProps {
 const Education = ({ schools }: EducationProps) => {
   return (
     <div className="w-full">
-      <h1 className=" bg-green-500 py-1 pl-4 text-xl font-bold">EDUCATION</h1>
-      {schools.school.length !== 0 ? (
+      <h1 className=" bg-green-500 py-1 pl-4 text-xl font-bold">
+        EDUCATION HISTORY & ACHIEVEMENTS
+      </h1>
+      {schools.school[0].name !== "" ? (
         <div className="flex w-full flex-col px-4">
           {schools.school.map((school, index) => (
             <div key={index} className="flex w-full flex-col">
@@ -39,7 +41,7 @@ const Education = ({ schools }: EducationProps) => {
           ))}
         </div>
       ) : (
-        <p>No education history.</p>
+        <li className="m-4 list-none">No education history.</li>
       )}
     </div>
   );
