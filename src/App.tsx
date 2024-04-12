@@ -24,11 +24,15 @@ const exampleResume = {
     contact: "09167482075",
     address: "Davao City",
   },
+  summary: {
+    summary:
+      "Recent Computer Science graduate proficient in the ReactJS framework and modern web technologies. Skilled in developing responsive, user-friendly websites and applications. Demonstrates strong problem-solving abilities and effective communication skills. Eager to apply technical knowledge and innovative solutions in a dynamic web development role.",
+  },
 };
 
 function App() {
   const [headerInfo, setHeaderInfo] = useState(exampleResume.header);
-  const [summaryInfo, setSummaryInfo] = useState(defaultValues.summary);
+  const [summaryInfo, setSummaryInfo] = useState(exampleResume.summary);
   const [workHistoryInfo, setWorkHistoryInfo] = useState([] as any[]);
   const [skillsList, setSkillsList] = useState<z.infer<typeof schema>>({
     skills: [],
@@ -41,10 +45,10 @@ function App() {
     <div className="flex gap-4 p-4">
       <div className="flex flex-col gap-4">
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
-        <EducationForm onEducation={(data) => setEducationList(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
         <SkillsForm onSkills={(skill) => setSkillsList(skill)} />
         <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
+        <EducationForm onEducation={(data) => setEducationList(data)} />
       </div>
       <Resume
         header={{ ...headerInfo }}

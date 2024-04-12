@@ -105,7 +105,6 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
         <Form {...form}>
           <form
             onSubmit={handleSubmit((data) => {
-              console.log(data);
               onEducation(data);
             })}
             className="space-y-2"

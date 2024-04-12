@@ -1,16 +1,26 @@
-import { Button } from "@/components/ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "./ui/collapsible";
+import { Button } from "./ui/button";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash } from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
+import { useState } from "react";
+import { Label } from "./ui/label";
 
 export const schema = z.object({
   skills: z
@@ -27,6 +37,7 @@ interface SkillsFormProps {
 }
 
 const SkillsForm = ({ onSkills }: SkillsFormProps) => {
+  const [isOpen, setIsOpen] = useState(false);
   const form = useForm<SkillsFormData>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -50,62 +61,88 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
   });
 
   return (
-    <div className="rounded-md border p-4 shadow-md">
-      <Form {...form}>
-        <div className="flex items-center justify-between">
+    <Collapsible
+      className="rounded-md border p-4 shadow-md"
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
+      <div className="flex items-center justify-between">
+        <div className="flex items-center space-x-4">
           <h1 className="text-xl font-bold">Skills</h1>
-          <Button
-            type="button"
-            onClick={() => {
-              append({
-                skill: "",
-              });
-            }}
-            variant="link"
-          >
-            Add..
-          </Button>
+          {isOpen && <Label className="">Add up to 10 skills</Label>}
         </div>
-        <form
-          onSubmit={handleSubmit((data) => {
-            onSkills(data);
-          })}
-          className="space-y-2 py-2"
-        >
-          {fields.map((field, index) => {
-            return (
-              <FormField
-                key={field.id}
-                name={`skills.${index}.skill`}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <div className="flex gap-1">
-                        <Input placeholder="TypeScript.." {...field} />
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          size="icon"
-                          onClick={() => remove(index)}
-                        >
-                          <Trash className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            );
-          })}
-
-          <p>{errors.skills?.root?.message}</p>
-          <Button type="submit" variant="outline" className="self-end">
-            Submit
+        <CollapsibleTrigger asChild>
+          <Button variant="ghost" size="sm" className="w-9 p-0">
+            {isOpen ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
+            )}
+            <span className="sr-only">Toggle</span>
           </Button>
-        </form>
-      </Form>
-    </div>
+        </CollapsibleTrigger>
+      </div>
+      <CollapsibleContent>
+        <Form {...form}>
+          <form
+            onSubmit={handleSubmit((data) => {
+              onSkills(data);
+            })}
+            className="space-y-2"
+          >
+            <div className="flex flex-col gap-2 py-2">
+              {fields.map((field, index) => {
+                return (
+                  <FormField
+                    key={field.id}
+                    name={`skills.${index}.skill`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <div className="flex gap-1">
+                            <Input placeholder="TypeScript.." {...field} />
+                            <Button
+                              type="button"
+                              variant="destructive"
+                              size="icon"
+                              onClick={() => remove(index)}
+                            >
+                              <Trash className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                );
+              })}
+
+              <p>{errors.skills?.root?.message}</p>
+            </div>
+            {/* CTA Buttons */}
+            <div className="flex justify-between">
+              {/* Submit Button */}
+              <Button type="submit" variant="default" className="self-end">
+                Submit
+              </Button>
+              {/* Add a School Button*/}
+              <Button
+                type="button"
+                onClick={() => {
+                  append({
+                    skill: "",
+                  });
+                }}
+                variant="secondary"
+              >
+                Add a skill
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </CollapsibleContent>
+    </Collapsible>
   );
 };
 

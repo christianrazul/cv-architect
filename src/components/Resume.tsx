@@ -7,10 +7,11 @@ import { schema } from "./SkillsForm";
 import Education from "./Education";
 import { EducationFormData } from "./EducationForm";
 import { HeaderData } from "./HeaderForm";
+import { SummaryData } from "./SummaryForm";
 
 interface ResumeProps {
   header: HeaderData;
-  summary: string;
+  summary: SummaryData;
   workHistory: any[];
   skills: z.infer<typeof schema>;
   education: EducationFormData;
@@ -28,7 +29,7 @@ const Resume = ({
       <div className="w-60 bg-primary p-4"></div>
       <div className=" flex w-full flex-col gap-2 px-4 ">
         <Header header={{ ...header }} />
-        <Summary summary={summary} />
+        <Summary summary={{ ...summary }} />
         <Skills skills={skills} />
         <WorkHistory workHistory={[...workHistory]} />
         <Education schools={{ ...education }} />
