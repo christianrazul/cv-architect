@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -10,7 +10,11 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import {
   Popover,
   PopoverContent,
@@ -19,233 +23,322 @@ import {
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
-export const schema = z.object({
-  company: z.string(),
-  address: z.string(),
-  role: z.string(),
-  startDate: z.date(),
-  endDate: z.date(),
-  description: z.string().array().min(1),
+export const WorkHistorySchema = z.object({
+  workInfo: z
+    .object({
+      company: z.string(),
+      address: z.string(),
+      role: z.string(),
+      startDate: z.date(),
+      endDate: z.date(),
+      description: z.string().array().min(1),
+    })
+    .array(),
 });
 
+export type WorkHistoryData = z.infer<typeof WorkHistorySchema>;
+
+export const workHistoryDefaultValues = {
+  company: "",
+  address: "",
+  role: "",
+  startDate: new Date(),
+  endDate: new Date(),
+  description: ["", "", "", "", ""],
+};
 interface WorkHistoryFormProps {
-  onWorkHistory: (data: z.infer<typeof schema>[]) => void;
+  onWorkHistory: (data: WorkHistoryData) => void;
 }
 
 const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
   // state that holds the work histories in an array
   const [workHistory, setWorkHistory] = useState(
-    [] as z.infer<typeof schema>[],
+    [] as z.infer<typeof WorkHistorySchema>[],
   );
-
+  const [isOpen, setIsOpen] = useState(true);
   const [descriptionCount, setDescriptionCount] = useState(1);
 
-  // form hook
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<WorkHistoryData>({
+    resolver: zodResolver(WorkHistorySchema),
     defaultValues: {
-      company: "Lexagle",
-      address: "Singapore",
-      role: "Software Developer",
-      startDate: new Date("2021-01-01"),
-      endDate: new Date(),
-      description: Array(descriptionCount).fill(
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque illum quasi maiores est quam dolorem officia suscipit voluptatem consequatur vero?",
-      ),
+      workInfo: [workHistoryDefaultValues],
     },
   });
 
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = form;
+
+  const { fields, append, remove } = useFieldArray({
+    name: "workInfo",
+    control,
+  });
+
   // function that handles the form submission
-  const onSubmit = (values: z.infer<typeof schema>) => {
-    // add the work history to the existing workHistory state
-    setWorkHistory([...workHistory, values]);
+  // const onSubmit = (values: WorkHistoryData) => {
+  //   // add the work history to the existing workHistory state
+  //   setWorkHistory([...workHistory, values]);
 
-    // reset the form
-    form.reset();
-  };
+  //   // reset the form
+  //   form.reset();
+  // };
 
-  useEffect(() => {
-    // call the onWorkHistory prop with the updated workHistory state
-    onWorkHistory([...workHistory]);
-  }, [workHistory]);
+  // useEffect(() => {
+  //   // call the onWorkHistory prop with the updated workHistory state
+  //   onWorkHistory([...workHistory]);
+  // }, [workHistory]);
 
   const addDescriptionField = () => {
     setDescriptionCount(descriptionCount + 1);
   };
 
   return (
-    <div className="rounded-md border p-4 shadow-md">
-      <h1 className="text-xl font-bold">Work History</h1>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2 py-2">
-          {/* Company Name */}
-          <FormField
-            control={form.control}
-            name="company"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Company</FormLabel>
-                <FormControl>
-                  <Input placeholder="Company Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+    <Collapsible
+      className="rounded-md border p-4 shadow-md"
+      open={isOpen}
+      onOpenChange={setIsOpen}
+    >
+      <div className="flex items-center justify-between">
+        <h1 className="text-xl font-bold">Work History</h1>
+        <CollapsibleTrigger asChild>
+          <Button variant="ghost" size="sm" className="w-9 p-0">
+            {isOpen ? (
+              <ChevronUp className="h-4 w-4" />
+            ) : (
+              <ChevronDown className="h-4 w-4" />
             )}
-          />
-          {/* Address */}
-          <FormField
-            control={form.control}
-            name="address"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Address</FormLabel>
-                <FormControl>
-                  <Input placeholder="Davao City" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Role */}
-          <FormField
-            control={form.control}
-            name="role"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Role</FormLabel>
-                <FormControl>
-                  <Input placeholder="Software Engineer" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          {/* Descriptions */}
-          {Array.from({ length: descriptionCount }, (_, index) => (
-            <FormField
-              key={index}
-              control={form.control}
-              name={`description.${index}`}
-              render={({ field }) => (
-                <FormItem>
-                  {index === 0 && (
-                    <div className="flex items-center justify-between">
-                      <FormLabel>Description</FormLabel>
-                      <Button
-                        type="button"
-                        variant={"link"}
-                        className="h-auto py-0"
-                        onClick={addDescriptionField}
-                      >
-                        Add..
-                      </Button>
-                    </div>
-                  )}
-
-                  <FormControl>
-                    <Input placeholder="Description" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          ))}
-          {/* Date pickers */}
-          <div className="flex gap-4">
-            <FormField
-              control={form.control}
-              name="startDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Start Date</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-36 pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground",
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "P")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="z-10 w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="endDate"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>End Date</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-36 pl-3 text-left font-normal",
-                            !field.value && "text-muted-foreground",
-                          )}
-                        >
-                          {field.value ? (
-                            format(field.value, "P")
-                          ) : (
-                            <span>Pick a date</span>
-                          )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="z-10 w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={field.value}
-                        onSelect={field.onChange}
-                        disabled={(date) =>
-                          date > new Date() || date < new Date("1900-01-01")
-                        }
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <Button type="submit" variant="outline" className="self-end">
-            Add
+            <span className="sr-only">Toggle</span>
           </Button>
-        </form>
-      </Form>
-    </div>
+        </CollapsibleTrigger>
+      </div>
+      <CollapsibleContent>
+        <Form {...form}>
+          <form
+            onSubmit={handleSubmit((data) => {
+              console.log(data);
+              onWorkHistory(data);
+            })}
+            className="space-y-2 py-2"
+          >
+            {fields.map((field, index) => {
+              return (
+                <div
+                  key={field.id}
+                  className={
+                    index !== 0
+                      ? "flex flex-col gap-2 border-t-2 border-orange-500 py-4"
+                      : "flex flex-col gap-2 py-4"
+                  }
+                >
+                  {/* Company Name */}
+                  <FormField
+                    control={control}
+                    name={`workInfo.${index}.company`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <div className="flex justify-between">
+                          <FormLabel>Company</FormLabel>
+                          <Button
+                            variant="link"
+                            onClick={() => remove(index)}
+                            className="h-0 text-red-500"
+                          >
+                            Remove
+                          </Button>
+                        </div>
+                        <FormControl>
+                          <Input placeholder="Company Name" {...field} />
+                        </FormControl>
+
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {/* Address */}
+                  <FormField
+                    control={form.control}
+                    name={`workInfo.${index}.address`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Address</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Davao City" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {/* Role */}
+                  <FormField
+                    control={form.control}
+                    name={`workInfo.${index}.role`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Role</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Software Engineer" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  {/* Descriptions */}
+                  {Array.from({ length: descriptionCount }, (_, arrayIndex) => (
+                    <FormField
+                      key={arrayIndex}
+                      control={form.control}
+                      name={`workInfo.${index}.description.${arrayIndex}`}
+                      render={({ field }) => (
+                        <FormItem>
+                          {arrayIndex === 0 && (
+                            <div className="flex items-center justify-between">
+                              <FormLabel>Description</FormLabel>
+                              <Button
+                                type="button"
+                                variant={"link"}
+                                className="h-auto py-0"
+                                onClick={addDescriptionField}
+                                disabled={descriptionCount === 5}
+                              >
+                                Add..
+                              </Button>
+                            </div>
+                          )}
+                          <FormControl>
+                            <Input
+                              placeholder="Job Responsibility"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ))}
+                  {/* Date pickers */}
+                  <div className="flex gap-4">
+                    <FormField
+                      control={form.control}
+                      name={`workInfo.${index}.startDate`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Start Date</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant={"outline"}
+                                  className={cn(
+                                    "w-36 pl-3 text-left font-normal",
+                                    !field.value && "text-muted-foreground",
+                                  )}
+                                >
+                                  {field.value ? (
+                                    format(field.value, "P")
+                                  ) : (
+                                    <span>Pick a date</span>
+                                  )}
+                                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="z-10 w-auto p-0"
+                              align="start"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                disabled={(date) =>
+                                  date > new Date() ||
+                                  date < new Date("1900-01-01")
+                                }
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`workInfo.${index}.endDate`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>End Date</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <FormControl>
+                                <Button
+                                  variant={"outline"}
+                                  className={cn(
+                                    "w-36 pl-3 text-left font-normal",
+                                    !field.value && "text-muted-foreground",
+                                  )}
+                                >
+                                  {field.value ? (
+                                    format(field.value, "P")
+                                  ) : (
+                                    <span>Pick a date</span>
+                                  )}
+                                  <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                </Button>
+                              </FormControl>
+                            </PopoverTrigger>
+                            <PopoverContent
+                              className="z-10 w-auto p-0"
+                              align="start"
+                            >
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                disabled={(date) =>
+                                  date > new Date() ||
+                                  date < new Date("1900-01-01")
+                                }
+                                initialFocus
+                              />
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+
+            {/* CTA Buttons */}
+            <div className="flex justify-between">
+              {/* Submit Button */}
+              <Button type="submit" variant="default" className="self-end">
+                Submit
+              </Button>
+              {/* Add a School Button*/}
+              <Button
+                type="button"
+                onClick={() => {
+                  append(workHistoryDefaultValues);
+                }}
+                variant="secondary"
+              >
+                Add a job
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </CollapsibleContent>
+    </Collapsible>
   );
 };
 

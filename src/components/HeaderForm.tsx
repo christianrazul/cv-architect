@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -39,8 +39,7 @@ interface HeaderFormProps {
 }
 
 const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
-  // const [headerInfo, setHeaderInfo] = useState<HeaderData>(headerDefaultValues);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<HeaderData>({
     resolver: zodResolver(HeaderSchema),

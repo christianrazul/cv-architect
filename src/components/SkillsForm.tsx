@@ -10,7 +10,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
@@ -69,7 +68,7 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <h1 className="text-xl font-bold">Skills</h1>
-          {isOpen && <Label className="">Add up to 10 skills</Label>}
+          {isOpen && <Label className="font-light">Add up to 10 skills</Label>}
         </div>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm" className="w-9 p-0">
