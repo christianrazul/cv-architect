@@ -14,7 +14,12 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  CalendarIcon,
+  ChevronDown,
+  ChevronUp,
+  GraduationCap,
+} from "lucide-react";
 import { useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
@@ -89,7 +94,16 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
       onOpenChange={setIsOpen}
     >
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold">Education History</h1>
+        <div className="flex items-center gap-2">
+          <GraduationCap
+            strokeWidth={2}
+            className="h-6 w-6"
+            absoluteStrokeWidth={false}
+          />
+          <h1 style={{ strokeWidth: 4 }} className="text-xl font-semibold">
+            Education History
+          </h1>
+        </div>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm" className="w-9 p-0">
             {isOpen ? (

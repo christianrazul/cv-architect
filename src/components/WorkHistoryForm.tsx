@@ -23,7 +23,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
-import { CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
+import { Briefcase, CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { format } from "date-fns";
 import { useState } from "react";
 
@@ -89,7 +89,16 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
       onOpenChange={setIsOpen}
     >
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold">Work History</h1>
+        <div className="flex items-center gap-2">
+          <Briefcase
+            strokeWidth={2}
+            className="h-6 w-6"
+            absoluteStrokeWidth={false}
+          />
+          <h1 style={{ strokeWidth: 4 }} className="text-xl font-semibold">
+            Work History
+          </h1>
+        </div>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm" className="w-9 p-0">
             {isOpen ? (

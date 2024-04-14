@@ -17,7 +17,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, User } from "lucide-react";
 
 const HeaderSchema = z.object({
   fullName: z.string().min(1, "Name cannot be empty"),
@@ -55,7 +55,17 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
       onOpenChange={setIsOpen}
     >
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold">Personal Information</h1>
+        <div className="flex items-center gap-2">
+          <User
+            strokeWidth={2}
+            className="h-6 w-6"
+            absoluteStrokeWidth={false}
+          />
+          <h1 style={{ strokeWidth: 4 }} className="text-xl font-semibold">
+            Personal Information
+          </h1>
+        </div>
+
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm" className="w-9 p-0">
             {isOpen ? (

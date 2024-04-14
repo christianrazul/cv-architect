@@ -4,7 +4,7 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { Button } from "./ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, PencilRuler } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -67,7 +67,16 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <h1 className="text-xl font-bold">Skills</h1>
+          <div className="flex items-center gap-2">
+            <PencilRuler
+              strokeWidth={2}
+              className="h-6 w-6"
+              absoluteStrokeWidth={false}
+            />
+            <h1 style={{ strokeWidth: 4 }} className="text-xl font-semibold">
+              Skills
+            </h1>
+          </div>
           {isOpen && <Label className="font-light">Add up to 10 skills</Label>}
         </div>
         <CollapsibleTrigger asChild>

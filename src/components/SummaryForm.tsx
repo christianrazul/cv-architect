@@ -17,7 +17,7 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { Button } from "./ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, FilePen } from "lucide-react";
 
 const SummarySchema = z.object({
   summary: z.string().min(10, { message: "Write at least 10 words" }),
@@ -49,7 +49,16 @@ const SummaryForm = ({ onSummary }: SummaryFormProps) => {
       onOpenChange={setIsOpen}
     >
       <div className="flex items-center justify-between">
-        <h1 className="text-xl font-bold">Professional Summary</h1>
+        <div className="flex items-center gap-2">
+          <FilePen
+            strokeWidth={2}
+            className="h-6 w-6"
+            absoluteStrokeWidth={false}
+          />
+          <h1 style={{ strokeWidth: 4 }} className="text-xl font-semibold">
+            Professional Summary
+          </h1>
+        </div>
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm" className="w-9 p-0">
             {isOpen ? (
