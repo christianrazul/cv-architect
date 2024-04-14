@@ -39,7 +39,7 @@ interface HeaderFormProps {
 }
 
 const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const form = useForm<HeaderData>({
     resolver: zodResolver(HeaderSchema),

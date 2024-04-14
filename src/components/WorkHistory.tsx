@@ -9,7 +9,7 @@ const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
       <h1 className=" bg-orange-400 py-1 pl-4 text-xl font-bold">
         WORK HISTORY
       </h1>
-      <div className="flex w-full flex-col">
+      <div className="flex w-full flex-col px-4">
         {workHistory.workInfo[0].company !== "" ? (
           workHistory.workInfo.map((work, index) => (
             <div key={index} className="flex w-full flex-col">

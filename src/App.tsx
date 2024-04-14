@@ -105,7 +105,8 @@ function App() {
   });
 
   return (
-    <div className="flex h-screen w-full justify-center gap-16 bg-gray-100 p-32 align-middle">
+    // <div className="flex h-screen w-full justify-center gap-16 bg-gray-100 p-32 align-middle">
+    <div className="grid h-screen w-screen grid-cols-2 gap-x-4 bg-gray-100 p-16">
       <div className="flex flex-col flex-wrap gap-4">
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
