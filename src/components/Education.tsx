@@ -11,7 +11,7 @@ const Education = ({ schools }: EducationProps) => {
         EDUCATION HISTORY & ACHIEVEMENTS
       </h1>
       {schools.school[0].name !== "" ? (
-        <div className="flex w-full flex-col px-4 pb-2 pt-4">
+        <div className="flex w-full flex-col gap-4 px-4 pb-2 pt-4">
           {schools.school.map((school, index) => (
             <div key={index} className="flex w-full flex-col">
               <div className="flex justify-between">
@@ -21,20 +21,21 @@ const Education = ({ schools }: EducationProps) => {
                 </div>
                 <p>
                   {school.startDate.toLocaleDateString("en-US", {
-                    month: "long",
+                    month: "short",
                     year: "numeric",
                   })}
                   {" - "}
                   {school.endDate.toLocaleDateString("en-US", {
-                    month: "long",
+                    month: "short",
                     year: "numeric",
                   })}
                 </p>
               </div>
               <p className="mb-1 font-bold text-primary">{school.degree}</p>
-              <ul>
-                {school.achievements.map((achievement, index) =>
-                  achievement ? <li key={index}>• {achievement}</li> : null,
+              <ul className="ml-5 list-outside list-disc">
+                {school.achievements.map(
+                  (achievement, index) =>
+                    achievement && <li key={index}>{achievement}</li>,
                 )}
               </ul>
             </div>

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./style.css";
+import { useReactToPrint } from "react-to-print";
 import HeaderForm, { headerDefaultValues } from "./components/HeaderForm";
 import Resume from "./components/Resume";
 import SummaryForm from "./components/SummaryForm";
@@ -7,6 +8,7 @@ import WorkHistoryForm, { WorkHistoryData } from "./components/WorkHistoryForm";
 import SkillsForm, { SkillsFormData } from "./components/SkillsForm";
 import EducationForm, { EducationFormData } from "./components/EducationForm";
 import CustomForm, { CustomData } from "./components/CustomForm";
+import { Button } from "./components/ui/button";
 
 export const defaultValues = {
   header: headerDefaultValues,
@@ -111,12 +113,23 @@ function App() {
     exampleResume.custom,
   );
 
+  const resumeRef = useRef(null);
+
+  const handlePrint = useReactToPrint({
+    content: () => resumeRef.current,
+    documentTitle: "Generated Resume",
+    onAfterPrint: () => console.log("Print complete!"),
+  });
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-8">
       {/* Container for all the forms
         TODO: Refactor into a component
        */}
       <div className="flex w-full flex-col gap-4 md:w-[21cm] lg:w-[360px]">
+        <Button variant="default" onClick={handlePrint}>
+          Print
+        </Button>
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
         <SkillsForm onSkills={(skill) => setSkillsList(skill)} />
@@ -125,6 +138,7 @@ function App() {
         <CustomForm onCustomInfo={(data) => setCustomInfo(data)} />
       </div>
       <Resume
+        ref={resumeRef}
         header={{ ...headerInfo }}
         summary={summaryInfo}
         workHistory={{ ...workHistoryInfo }}

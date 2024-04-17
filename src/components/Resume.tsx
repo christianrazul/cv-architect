@@ -11,6 +11,7 @@ import { SummaryData } from "./SummaryForm";
 import { WorkHistoryData } from "./WorkHistoryForm";
 import { CustomData } from "./CustomForm";
 import Custom from "./Custom";
+import React, { ForwardedRef } from "react";
 
 interface ResumeProps {
   header: HeaderData;
@@ -21,26 +22,27 @@ interface ResumeProps {
   custom: CustomData;
 }
 
-const Resume = ({
-  header,
-  summary,
-  workHistory,
-  skills,
-  education,
-  custom,
-}: ResumeProps) => {
-  return (
-    <div className="shrink-0 rounded-md border bg-white p-8 shadow-xl md:w-[21cm]">
-      <div className="flex w-full flex-col gap-2">
-        <Header header={{ ...header }} />
-        <Summary summary={{ ...summary }} />
-        {skills && <Skills skills={skills} />}
-        <WorkHistory workHistory={{ ...workHistory }} />
-        <Education schools={{ ...education }} />
-        {custom && <Custom customInfo={{ ...custom }} />}
+const Resume = React.forwardRef<HTMLDivElement, ResumeProps>(
+  (
+    { header, summary, workHistory, skills, education, custom }: ResumeProps,
+    ref: ForwardedRef<HTMLDivElement>,
+  ) => {
+    return (
+      <div
+        ref={ref}
+        className="shrink-0 rounded-md border bg-white p-8 shadow-xl md:w-[21cm]"
+      >
+        <div className="flex w-full flex-col gap-2">
+          <Header header={{ ...header }} />
+          <Summary summary={{ ...summary }} />
+          {skills && <Skills skills={skills} />}
+          <WorkHistory workHistory={{ ...workHistory }} />
+          <Education schools={{ ...education }} />
+          {custom && <Custom customInfo={{ ...custom }} />}
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);
 
 export default Resume;
