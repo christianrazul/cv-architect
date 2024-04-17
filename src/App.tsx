@@ -105,22 +105,23 @@ function App() {
   });
 
   return (
-    // <div className="flex h-screen w-full justify-center gap-16 bg-gray-100 p-32 align-middle">
-    <div className="grid h-screen w-screen grid-cols-2 gap-x-4 bg-gray-100 p-16">
-      <div className="flex flex-col flex-wrap gap-4">
-        <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
-        <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
-        <SkillsForm onSkills={(skill) => setSkillsList(skill)} />
-        <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
-        <EducationForm onEducation={(data) => setEducationList(data)} />
+    <div className="flex h-screen w-screen justify-center align-middle">
+      <div className="grid w-full grid-cols-2 justify-center gap-8 bg-gray-100 p-16 align-middle sm:px-4 md:px-8 lg:px-16 xl:px-32">
+        <div className="flex w-80 flex-col flex-wrap gap-4">
+          <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
+          {/* <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
+          <SkillsForm onSkills={(skill) => setSkillsList(skill)} />
+          <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
+          <EducationForm onEducation={(data) => setEducationList(data)} /> */}
+        </div>
+        <Resume
+          header={{ ...headerInfo }}
+          summary={summaryInfo}
+          workHistory={{ ...workHistoryInfo }}
+          skills={{ ...skillsList }}
+          education={{ ...educationList }}
+        />
       </div>
-      <Resume
-        header={{ ...headerInfo }}
-        summary={summaryInfo}
-        workHistory={{ ...workHistoryInfo }}
-        skills={{ ...skillsList }}
-        education={{ ...educationList }}
-      />
     </div>
   );
 }

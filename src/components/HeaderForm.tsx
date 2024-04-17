@@ -50,7 +50,7 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
 
   return (
     <Collapsible
-      className=" rounded-md border bg-white p-4 shadow-md"
+      className="rounded-md border bg-white p-4 shadow-md"
       open={isOpen}
       onOpenChange={setIsOpen}
     >
@@ -61,7 +61,10 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
             className="h-6 w-6"
             absoluteStrokeWidth={false}
           />
-          <h1 style={{ strokeWidth: 4 }} className="text-xl font-semibold">
+          <h1
+            style={{ strokeWidth: 4 }}
+            className="text-xl font-semibold md:inline "
+          >
             Personal Information
           </h1>
         </div>
