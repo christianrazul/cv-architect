@@ -9,6 +9,7 @@ import SkillsForm, { SkillsFormData } from "./components/SkillsForm";
 import EducationForm, { EducationFormData } from "./components/EducationForm";
 import CustomForm, { CustomData } from "./components/CustomForm";
 import { Button } from "./components/ui/button";
+import { Input } from "./components/ui/input";
 
 export const defaultValues = {
   header: headerDefaultValues,
@@ -18,7 +19,7 @@ export const defaultValues = {
 
 const exampleResume = {
   header: {
-    fullName: "Rudolph Christian R. Razul",
+    fullName: "Rudolph Christian Razul",
     email: "razulchristian@gmail.com",
     contact: "09167482075",
     address: "Davao City",
@@ -92,8 +93,10 @@ const exampleResume = {
     },
   ],
   custom: {
-    title: "FUN FACTS",
-    description: "This resume was created using an app I built!",
+    // title: "FUN FACTS",
+    // description: "This resume was created using an app I built!",
+    title: "",
+    description: "",
   },
 };
 
@@ -119,10 +122,13 @@ function App() {
     content: () => resumeRef.current,
     documentTitle: `${headerInfo.fullName} Resume`,
     onAfterPrint: () => console.log("Print complete!"),
+    onBeforeGetContent: () => {
+      ("");
+    },
   });
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-8">
+    <div className="main-bg flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-8">
       {/* Container for all the forms
         TODO: Refactor into a component
        */}
@@ -144,7 +150,7 @@ function App() {
         workHistory={{ ...workHistoryInfo }}
         skills={{ ...skillsList }}
         education={{ ...educationList }}
-        custom={{ ...customInfo }}
+        // custom={{ ...customInfo }}
       />
     </div>
   );

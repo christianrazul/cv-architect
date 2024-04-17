@@ -1,4 +1,5 @@
 import { WorkHistoryData } from "./WorkHistoryForm";
+import FieldTitle from "./ui/FieldTitle";
 
 interface WorkHistoryProps {
   workHistory: WorkHistoryData;
@@ -6,9 +7,7 @@ interface WorkHistoryProps {
 const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
   return (
     <div className="w-full">
-      <h1 className=" bg-orange-400 py-1 pl-4 text-xl font-bold">
-        WORK HISTORY
-      </h1>
+      <FieldTitle color="bg-orange-400" title="WORK HISTORY" />
       <div className="flex w-full flex-col gap-4 px-4 pb-2 pt-4">
         {workHistory.workInfo[0].company !== "" ? (
           workHistory.workInfo.map((work, index) => (
@@ -31,7 +30,7 @@ const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
                 </p>
               </div>
               <p className="mb-1 font-bold text-primary">{work.role}</p>
-              <ul className="ml-5 list-outside list-disc">
+              <ul className="ml-5 list-outside list-disc text-sm">
                 {work.description.map((desc, index) => {
                   return desc && <li key={index}>{desc}</li>;
                 })}

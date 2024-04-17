@@ -1,4 +1,5 @@
 import { CustomData } from "./CustomForm";
+import FieldTitle from "./ui/FieldTitle";
 
 interface CustomDataProps {
   customInfo: CustomData;
@@ -7,9 +8,7 @@ interface CustomDataProps {
 const Custom = ({ customInfo }: CustomDataProps) => {
   return (
     <div className="w-full">
-      <h1 className=" bg-blue-400 py-1 pl-4 text-xl font-bold">
-        {customInfo.title}
-      </h1>
+      <FieldTitle color="bg-blue-400" title={customInfo.title} />
       <div className="px-4 pb-2 pt-4">
         <p>{customInfo.description}</p>
       </div>

@@ -19,7 +19,7 @@ interface ResumeProps {
   workHistory: WorkHistoryData;
   skills: z.infer<typeof schema>;
   education: EducationFormData;
-  custom: CustomData;
+  custom?: CustomData;
 }
 
 const Resume = React.forwardRef<HTMLDivElement, ResumeProps>(
@@ -28,8 +28,12 @@ const Resume = React.forwardRef<HTMLDivElement, ResumeProps>(
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
     return (
-      <div ref={ref} className="shrink-0 bg-white p-8 shadow-xl md:w-[21cm]">
-        <div className="flex w-full flex-col gap-2">
+      <div ref={ref} className="flex shrink-0 bg-white shadow-xl md:w-[21cm]">
+        <div className="flex w-full flex-col gap-2 p-6">
+          {/* <img
+              src={profilePicture}
+              className="my-4 border-4 border-blue-950 object-fill"
+            /> */}
           <Header header={{ ...header }} />
           <Summary summary={{ ...summary }} />
           {skills && <Skills skills={skills} />}

@@ -24,6 +24,7 @@ const HeaderSchema = z.object({
   email: z.string().email(),
   contact: z.string(),
   address: z.string(),
+  profilePicture: z.any(),
 });
 
 export type HeaderData = z.infer<typeof HeaderSchema>;
@@ -33,6 +34,7 @@ export const headerDefaultValues = {
   email: "",
   contact: "",
   address: "",
+  profilePicture: "",
 };
 interface HeaderFormProps {
   onHeaderInfo: (headerInfo: HeaderData) => void;
@@ -68,7 +70,6 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
             Personal Information
           </h1>
         </div>
-
         <CollapsibleTrigger asChild>
           <Button variant="ghost" size="sm" className="w-9 p-0">
             {isOpen ? (
@@ -87,6 +88,19 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
             className="space-y-2 "
           >
             <div className="flex flex-col gap-2 py-4">
+              <FormField
+                control={control}
+                name="profilePicture"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Profile Picture</FormLabel>
+                    <FormControl>
+                      <Input type="file" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={control}
                 name="fullName"

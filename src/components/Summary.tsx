@@ -1,4 +1,5 @@
 import { SummaryData } from "./SummaryForm";
+import FieldTitle from "./ui/FieldTitle";
 
 export interface SummaryInfo {
   summary: SummaryData;
@@ -6,11 +7,9 @@ export interface SummaryInfo {
 const Summary = ({ summary }: SummaryInfo) => {
   return (
     <div className="w-full">
-      <h1 className=" bg-orange-600 py-1 pl-4 text-xl font-bold">
-        PROFESSIONAL SUMMARY
-      </h1>
+      <FieldTitle color="bg-orange-600" title="PROFESSIONAL SUMMARY" />
       <div className="px-4 pb-2 pt-4">
-        <p>{summary.summary}</p>
+        <p className="text-sm">{summary.summary}</p>
       </div>
     </div>
   );
