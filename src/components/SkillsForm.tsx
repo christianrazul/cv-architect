@@ -143,6 +143,7 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
                   });
                 }}
                 variant="secondary"
+                disabled={fields.length === 10}
               >
                 Add a skill
               </Button>

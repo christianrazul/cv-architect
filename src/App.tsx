@@ -3,15 +3,10 @@ import "./style.css";
 import HeaderForm, { headerDefaultValues } from "./components/HeaderForm";
 import Resume from "./components/Resume";
 import SummaryForm from "./components/SummaryForm";
-import WorkHistoryForm, {
-  WorkHistoryData,
-  workHistoryDefaultValues,
-} from "./components/WorkHistoryForm";
+import WorkHistoryForm, { WorkHistoryData } from "./components/WorkHistoryForm";
 import SkillsForm, { SkillsFormData } from "./components/SkillsForm";
-import EducationForm, {
-  EducationDefaultValues,
-  EducationFormData,
-} from "./components/EducationForm";
+import EducationForm, { EducationFormData } from "./components/EducationForm";
+import CustomForm, { CustomData } from "./components/CustomForm";
 
 export const defaultValues = {
   header: headerDefaultValues,
@@ -94,6 +89,10 @@ const exampleResume = {
       ],
     },
   ],
+  custom: {
+    title: "FUN FACTS",
+    description: "This resume was created using an app I built!",
+  },
 };
 
 function App() {
@@ -108,6 +107,9 @@ function App() {
   const [educationList, setEducationList] = useState<EducationFormData>({
     school: exampleResume.school,
   });
+  const [customInfo, setCustomInfo] = useState<CustomData>(
+    exampleResume.custom,
+  );
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-8">
@@ -120,6 +122,7 @@ function App() {
         <SkillsForm onSkills={(skill) => setSkillsList(skill)} />
         <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
         <EducationForm onEducation={(data) => setEducationList(data)} />
+        <CustomForm onCustomInfo={(data) => setCustomInfo(data)} />
       </div>
       <Resume
         header={{ ...headerInfo }}
@@ -127,6 +130,7 @@ function App() {
         workHistory={{ ...workHistoryInfo }}
         skills={{ ...skillsList }}
         education={{ ...educationList }}
+        custom={{ ...customInfo }}
       />
     </div>
   );
