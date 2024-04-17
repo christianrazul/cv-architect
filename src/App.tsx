@@ -33,9 +33,9 @@ const exampleResume = {
   skills: [
     { skill: "JavaScript" },
     { skill: "TypeScript" },
-    { skill: "ReactJS" },
-    { skill: "TailWindCSS" },
-    { skill: "NodeJS" },
+    // { skill: "ReactJS" },
+    // { skill: "TailWindCSS" },
+    // { skill: "NodeJS" },
   ],
   workInfo: [
     {
@@ -105,23 +105,24 @@ function App() {
   });
 
   return (
-    <div className="flex h-screen w-screen justify-center align-middle">
-      <div className="grid w-full grid-cols-2 justify-center gap-8 bg-gray-100 p-16 align-middle sm:px-4 md:px-8 lg:px-16 xl:px-32">
-        <div className="flex w-80 flex-col flex-wrap gap-4">
-          <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
-          {/* <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
-          <SkillsForm onSkills={(skill) => setSkillsList(skill)} />
-          <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
-          <EducationForm onEducation={(data) => setEducationList(data)} /> */}
-        </div>
-        <Resume
-          header={{ ...headerInfo }}
-          summary={summaryInfo}
-          workHistory={{ ...workHistoryInfo }}
-          skills={{ ...skillsList }}
-          education={{ ...educationList }}
-        />
+    <div className="flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-16">
+      {/* Container for all the forms
+        TODO: Refactor into a component
+       */}
+      <div className="flex w-full flex-col flex-wrap gap-4 md:w-[21cm] lg:w-[360px]">
+        <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
+        <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
+        <SkillsForm onSkills={(skill) => setSkillsList(skill)} />
+        <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
+        <EducationForm onEducation={(data) => setEducationList(data)} />
       </div>
+      <Resume
+        header={{ ...headerInfo }}
+        summary={summaryInfo}
+        workHistory={{ ...workHistoryInfo }}
+        skills={{ ...skillsList }}
+        education={{ ...educationList }}
+      />
     </div>
   );
 }
