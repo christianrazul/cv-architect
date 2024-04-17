@@ -11,10 +11,10 @@ const Education = ({ schools }: EducationProps) => {
         EDUCATION HISTORY & ACHIEVEMENTS
       </h1>
       {schools.school[0].name !== "" ? (
-        <div className="flex w-full flex-col px-4">
+        <div className="flex w-full flex-col px-4 pb-2 pt-4">
           {schools.school.map((school, index) => (
             <div key={index} className="flex w-full flex-col">
-              <div className="flex justify-between pt-2">
+              <div className="flex justify-between">
                 <div className="flex gap-2">
                   <h2 className="font-bold">{school.name}</h2>
                   <h2>| {school.location}</h2>

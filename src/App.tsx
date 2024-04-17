@@ -110,11 +110,11 @@ function App() {
   });
 
   return (
-    <div className="flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-16">
+    <div className="flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-8">
       {/* Container for all the forms
         TODO: Refactor into a component
        */}
-      <div className="flex w-full flex-col flex-wrap gap-4 md:w-[21cm] lg:w-[360px]">
+      <div className="flex w-full flex-col gap-4 md:w-[21cm] lg:w-[360px]">
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />
         <SkillsForm onSkills={(skill) => setSkillsList(skill)} />

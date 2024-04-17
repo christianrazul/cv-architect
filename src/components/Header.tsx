@@ -13,7 +13,7 @@ interface HeaderProps {
 const Header = ({ header }: HeaderProps) => {
   return (
     header && (
-      <div className="flex w-full flex-col gap-4 py-2 pt-6">
+      <div className="flex w-full flex-col gap-4 pb-2 pt-4">
         <h1 className="w-full text-center text-5xl font-bold">
           {header.fullName}
         </h1>
