@@ -117,7 +117,7 @@ function App() {
 
   const handlePrint = useReactToPrint({
     content: () => resumeRef.current,
-    documentTitle: "Generated Resume",
+    documentTitle: `${headerInfo.fullName} Resume`,
     onAfterPrint: () => console.log("Print complete!"),
   });
 

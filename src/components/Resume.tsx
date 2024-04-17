@@ -28,10 +28,7 @@ const Resume = React.forwardRef<HTMLDivElement, ResumeProps>(
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
     return (
-      <div
-        ref={ref}
-        className="shrink-0 rounded-md border bg-white p-8 shadow-xl md:w-[21cm]"
-      >
+      <div ref={ref} className="shrink-0 bg-white p-8 shadow-xl md:w-[21cm]">
         <div className="flex w-full flex-col gap-2">
           <Header header={{ ...header }} />
           <Summary summary={{ ...summary }} />
