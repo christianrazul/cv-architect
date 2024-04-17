@@ -639,6 +639,10 @@ video {
   z-index: 50;
 }
 
+.col-auto {
+  grid-column: auto;
+}
+
 .m-4 {
   margin: 1rem;
 }
@@ -703,10 +707,6 @@ video {
   height: auto;
 }
 
-.h-screen {
-  height: 100vh;
-}
-
 .min-h-\[80px\] {
   min-height: 80px;
 }
@@ -735,16 +735,8 @@ video {
   width: 18rem;
 }
 
-.w-80 {
-  width: 20rem;
-}
-
 .w-9 {
   width: 2.25rem;
-}
-
-.w-\[21cm\] {
-  width: 21cm;
 }
 
 .w-auto {
@@ -753,22 +745,6 @@ video {
 
 .w-full {
   width: 100%;
-}
-
-.w-screen {
-  width: 100vw;
-}
-
-.w-8 {
-  width: 2rem;
-}
-
-.w-\[350px\] {
-  width: 350px;
-}
-
-.w-\[360px\] {
-  width: 360px;
 }
 
 .shrink-0 {
@@ -781,6 +757,15 @@ video {
 
 .list-none {
   list-style-type: none;
+}
+
+.columns-2 {
+  -moz-columns: 2;
+       columns: 2;
+}
+
+.grid-flow-col {
+  grid-auto-flow: column;
 }
 
 .grid-cols-2 {
@@ -1043,10 +1028,6 @@ video {
 
 .text-center {
   text-align: center;
-}
-
-.align-middle {
-  vertical-align: middle;
 }
 
 .text-5xl {
@@ -1402,24 +1383,8 @@ video {
     display: inline;
   }
 
-  .md\:grid {
-    display: grid;
-  }
-
   .md\:w-\[21cm\] {
     width: 21cm;
-  }
-
-  .md\:w-\[700px\] {
-    width: 700px;
-  }
-
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .md\:flex-row {
-    flex-direction: row;
   }
 
   .md\:px-8 {
@@ -1429,20 +1394,8 @@ video {
 }
 
 @media (min-width: 1024px) {
-  .lg\:w-\[21cm\] {
-    width: 21cm;
-  }
-
   .lg\:w-\[360px\] {
     width: 360px;
-  }
-
-  .lg\:grid-cols-1 {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-
-  .lg\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .lg\:flex-row {
@@ -1453,23 +1406,7 @@ video {
     align-items: flex-start;
   }
 
-  .lg\:bg-red-300 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(252 165 165 / var(--tw-bg-opacity));
-  }
-
   .lg\:px-16 {
-    padding-left: 4rem;
-    padding-right: 4rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .xl\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .xl\:px-16 {
     padding-left: 4rem;
     padding-right: 4rem;
   }

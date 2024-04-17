@@ -33,9 +33,14 @@ const exampleResume = {
   skills: [
     { skill: "JavaScript" },
     { skill: "TypeScript" },
-    // { skill: "ReactJS" },
-    // { skill: "TailWindCSS" },
-    // { skill: "NodeJS" },
+    { skill: "ReactJS" },
+    { skill: "TailWindCSS" },
+    { skill: "NodeJS" },
+    { skill: "Critical Thinking" },
+    { skill: "Effective Interpersonal Skills" },
+    { skill: "Flexibility and Adaptability" },
+    { skill: "Resourcefulness" },
+    { skill: "Adobe Photoshop" },
   ],
   workInfo: [
     {
