@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -18,7 +18,6 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { ChevronDown, ChevronUp, User } from "lucide-react";
-import { register } from "module";
 
 const MAX_FILE_SIZE = 5000000;
 const ACCEPTED_IMAGE_TYPES = [

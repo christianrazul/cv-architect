@@ -134,7 +134,7 @@ function App() {
        */}
       <div className="flex w-full flex-col gap-4 md:w-[21cm] lg:w-[360px]">
         <Button variant="default" onClick={handlePrint}>
-          Print
+          Save as PDF
         </Button>
         <HeaderForm onHeaderInfo={(data) => setHeaderInfo(data)} />
         <SummaryForm onSummary={(data) => setSummaryInfo(data)} />

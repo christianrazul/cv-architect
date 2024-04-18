@@ -720,6 +720,10 @@ video {
   height: 6rem;
 }
 
+.h-28 {
+  height: 7rem;
+}
+
 .min-h-\[80px\] {
   min-height: 80px;
 }
@@ -770,6 +774,10 @@ video {
 
 .w-24 {
   width: 6rem;
+}
+
+.w-28 {
+  width: 7rem;
 }
 
 .shrink-0 {
