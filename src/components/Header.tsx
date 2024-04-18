@@ -17,9 +17,9 @@ const Header = ({ header }: HeaderProps) => {
       <div className="flex w-full gap-4 pb-2 pt-4">
         <img
           src={header.profilePicture}
-          className="my-4 border-4 border-blue-950 object-fill"
+          className="h-24 w-24 border-2 border-blue-950 object-cover"
         />
-        <div>
+        <div className="flex w-full flex-col gap-4">
           <h1 className="w-full text-left text-5xl font-bold">
             {header.fullName}
           </h1>

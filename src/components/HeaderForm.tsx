@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -18,13 +18,33 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { ChevronDown, ChevronUp, User } from "lucide-react";
+import { register } from "module";
+
+const MAX_FILE_SIZE = 5000000;
+const ACCEPTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
 
 const HeaderSchema = z.object({
   fullName: z.string().min(1, "Name cannot be empty"),
   email: z.string().email(),
   contact: z.string(),
   address: z.string(),
-  profilePicture: z.any(),
+  profilePicture: z
+    .any()
+    // To not allow empty files
+    .refine((files) => files?.length >= 1, { message: "Image is required." })
+    // To not allow files other than images
+    .refine((files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type), {
+      message: "Only .jpg, .jpeg, .png and .webp files are accepted.",
+    })
+    // To not allow files larger than 5MB
+    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, {
+      message: `Max file size is 5MB.`,
+    }),
 });
 
 export type HeaderData = z.infer<typeof HeaderSchema>;
@@ -48,7 +68,8 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
     defaultValues: headerDefaultValues,
   });
 
-  const { handleSubmit, control } = form;
+  const { handleSubmit, control, register } = form;
+  // const imageRef = form.register("profilePicture");
 
   return (
     <Collapsible
@@ -84,7 +105,20 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
       <CollapsibleContent>
         <Form {...form}>
           <form
-            onSubmit={handleSubmit((data) => onHeaderInfo(data))}
+            onSubmit={handleSubmit(async (data) => {
+              if (data.profilePicture[0]) {
+                // transform FileList Object into a dataURL so that it can be used in img
+                const file = new FileReader();
+
+                file.onload = () => {
+                  onHeaderInfo({ ...data, profilePicture: file.result });
+                };
+
+                file.readAsDataURL(data.profilePicture[0]);
+              } else {
+                onHeaderInfo({ ...data });
+              }
+            })}
             className="space-y-2 "
           >
             <div className="flex flex-col gap-2 py-4">
@@ -95,7 +129,11 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
                   <FormItem>
                     <FormLabel>Profile Picture</FormLabel>
                     <FormControl>
-                      <Input type="file" {...field} />
+                      <Input
+                        type="file"
+                        {...register("profilePicture")}
+                        accept="image/*"
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
