@@ -12,7 +12,7 @@ interface HeaderProps {
 
 const Header = ({ header }: HeaderProps) => {
   return (
-    header &&
+    header.fullName !== "" &&
     (header.profilePicture ? (
       <div className="flex w-full gap-4 pb-2 pt-4">
         <img
