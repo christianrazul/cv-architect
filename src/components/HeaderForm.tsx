@@ -124,7 +124,7 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
               <FormField
                 control={control}
                 name="profilePicture"
-                render={({ field }) => (
+                render={() => (
                   <FormItem>
                     <FormLabel>Profile Picture</FormLabel>
                     <FormControl>

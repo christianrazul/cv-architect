@@ -7,12 +7,14 @@ interface CustomDataProps {
 
 const Custom = ({ customInfo }: CustomDataProps) => {
   return (
-    <div className="w-full">
-      <FieldTitle color="bg-blue-400" title={customInfo.title} />
-      <div className="px-4 pb-2 pt-4">
-        <p>{customInfo.description}</p>
+    customInfo.title !== "" && (
+      <div className="w-full">
+        <FieldTitle color="bg-blue-400" title={customInfo.title} />
+        <div className="px-4 pb-2 pt-4">
+          <p>{customInfo.description}</p>
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

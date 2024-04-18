@@ -6,12 +6,14 @@ export interface SummaryInfo {
 }
 const Summary = ({ summary }: SummaryInfo) => {
   return (
-    <div className="w-full">
-      <FieldTitle color="bg-orange-600" title="PROFESSIONAL SUMMARY" />
-      <div className="px-4 pb-2 pt-4">
-        <p className="text-sm">{summary.summary}</p>
+    summary.summary !== "" && (
+      <div className="w-full">
+        <FieldTitle color="bg-orange-600" title="PROFESSIONAL SUMMARY" />
+        <div className="px-4 pb-2 pt-4">
+          <p className="text-md">{summary.summary}</p>
+        </div>
       </div>
-    </div>
+    )
   );
 };
 

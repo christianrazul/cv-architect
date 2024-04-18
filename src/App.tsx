@@ -1,7 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./style.css";
 import { useReactToPrint } from "react-to-print";
-import HeaderForm, { headerDefaultValues } from "./components/HeaderForm";
+import HeaderForm from "./components/HeaderForm";
 import Resume from "./components/Resume";
 import SummaryForm from "./components/SummaryForm";
 import WorkHistoryForm, { WorkHistoryData } from "./components/WorkHistoryForm";
@@ -9,13 +9,6 @@ import SkillsForm, { SkillsFormData } from "./components/SkillsForm";
 import EducationForm, { EducationFormData } from "./components/EducationForm";
 import CustomForm, { CustomData } from "./components/CustomForm";
 import { Button } from "./components/ui/button";
-import { Input } from "./components/ui/input";
-
-export const defaultValues = {
-  header: headerDefaultValues,
-  summary:
-    "I am a full stack developer Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet, libero! Lorem ipsum dolor, sit amet consectetur adipisicing elit. Est, dolore temporibus nesciunt delectus assumenda recusandae!",
-};
 
 const exampleResume = {
   header: {
@@ -93,28 +86,90 @@ const exampleResume = {
     },
   ],
   custom: {
-    // title: "FUN FACTS",
-    // description: "This resume was created using an app I built!",
+    title: "FUN FACTS",
+    description: "This resume was created using an app I built!",
+  },
+};
+
+const emptyResume = {
+  header: {
+    fullName: "",
+    email: "",
+    contact: "",
+    address: "",
+  },
+  summary: {
+    summary: "",
+  },
+  skills: [
+    { skill: "" },
+    { skill: "" },
+    { skill: "" },
+    { skill: "" },
+    { skill: "" },
+    { skill: "" },
+    { skill: "" },
+    { skill: "" },
+    { skill: "" },
+    { skill: "" },
+  ],
+  workInfo: [
+    {
+      company: "",
+      address: "",
+      role: "",
+      startDate: new Date(""),
+      endDate: new Date(""),
+      description: [],
+    },
+    {
+      company: "",
+      address: "",
+      role: "",
+      startDate: new Date(""),
+      endDate: new Date(""),
+      description: [],
+    },
+  ],
+  school: [
+    {
+      name: "",
+      location: "",
+      degree: "",
+      startDate: new Date(),
+      endDate: new Date(),
+      achievements: [],
+    },
+    {
+      name: "",
+      location: "",
+      degree: "",
+      startDate: new Date(),
+      endDate: new Date(),
+      achievements: [],
+    },
+  ],
+  custom: {
     title: "",
     description: "",
   },
 };
 
 function App() {
-  const [headerInfo, setHeaderInfo] = useState(exampleResume.header);
-  const [summaryInfo, setSummaryInfo] = useState(exampleResume.summary);
+  const [resume, setResume] = useState(exampleResume);
+
+  const [headerInfo, setHeaderInfo] = useState(resume.header);
+  const [summaryInfo, setSummaryInfo] = useState(resume.summary);
   const [skillsList, setSkillsList] = useState<SkillsFormData>({
-    skills: exampleResume.skills,
+    skills: resume.skills,
   });
   const [workHistoryInfo, setWorkHistoryInfo] = useState<WorkHistoryData>({
-    workInfo: exampleResume.workInfo,
+    workInfo: resume.workInfo,
   });
   const [educationList, setEducationList] = useState<EducationFormData>({
-    school: exampleResume.school,
+    school: resume.school,
   });
-  const [customInfo, setCustomInfo] = useState<CustomData>(
-    exampleResume.custom,
-  );
+  const [customInfo, setCustomInfo] = useState<CustomData>(resume.custom);
 
   const resumeRef = useRef(null);
 
@@ -127,12 +182,44 @@ function App() {
     },
   });
 
+  // changes all resume states based on load or clear
+  useEffect(() => {
+    setHeaderInfo(resume.header);
+    setSummaryInfo(resume.summary);
+    setSkillsList({
+      skills: resume.skills,
+    });
+    setWorkHistoryInfo({
+      workInfo: resume.workInfo,
+    });
+    setEducationList({
+      school: resume.school,
+    });
+    setCustomInfo(resume.custom);
+  }, [resume]);
+
   return (
     <div className="main-bg flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-8">
       {/* Container for all the forms
         TODO: Refactor into a component
        */}
       <div className="flex w-full flex-col gap-4 md:w-[21cm] lg:w-[360px]">
+        <div className="flex w-full gap-2">
+          <Button
+            variant="outline"
+            className="flex-grow"
+            onClick={() => setResume(exampleResume)}
+          >
+            Load Example
+          </Button>
+          <Button
+            variant="destructive"
+            className="flex-grow"
+            onClick={() => setResume(emptyResume)}
+          >
+            Clear Resume
+          </Button>
+        </div>
         <Button variant="default" onClick={handlePrint}>
           Save as PDF
         </Button>
@@ -150,7 +237,7 @@ function App() {
         workHistory={{ ...workHistoryInfo }}
         skills={{ ...skillsList }}
         education={{ ...educationList }}
-        // custom={{ ...customInfo }}
+        custom={{ ...customInfo }}
       />
     </div>
   );

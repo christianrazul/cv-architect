@@ -38,7 +38,7 @@ const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
             </div>
           ))
         ) : (
-          <li className="m-4 list-none">No work history.</li>
+          <li className="list-none">No work history.</li>
         )}
       </div>
     </div>
