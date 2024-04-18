@@ -9,6 +9,7 @@ import SkillsForm, { SkillsFormData } from "./components/SkillsForm";
 import EducationForm, { EducationFormData } from "./components/EducationForm";
 import CustomForm, { CustomData } from "./components/CustomForm";
 import { Button } from "./components/ui/button";
+import Footer from "./components/Footer";
 
 const exampleResume = {
   header: {
@@ -200,9 +201,6 @@ function App() {
 
   return (
     <div className="main-bg flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-8">
-      {/* Container for all the forms
-        TODO: Refactor into a component
-       */}
       <div className="flex w-full flex-col gap-4 md:w-[21cm] lg:w-[360px]">
         <div className="flex w-full gap-2">
           <Button
@@ -229,6 +227,7 @@ function App() {
         <WorkHistoryForm onWorkHistory={(data) => setWorkHistoryInfo(data)} />
         <EducationForm onEducation={(data) => setEducationList(data)} />
         <CustomForm onCustomInfo={(data) => setCustomInfo(data)} />
+        <Footer />
       </div>
       <Resume
         ref={resumeRef}
