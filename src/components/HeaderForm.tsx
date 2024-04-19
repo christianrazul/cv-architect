@@ -32,18 +32,17 @@ const HeaderSchema = z.object({
   email: z.string().email(),
   contact: z.string(),
   address: z.string(),
-  profilePicture: z
-    .any()
-    // To not allow empty files
-    .refine((files) => files?.length >= 1, { message: "Image is required." })
-    // To not allow files other than images
-    .refine((files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type), {
-      message: "Only .jpg, .jpeg, .png and .webp files are accepted.",
-    })
-    // To not allow files larger than 5MB
-    .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, {
-      message: `Max file size is 5MB.`,
-    }),
+  profilePicture: z.any().optional(),
+  // To not allow empty files
+  // .refine((files) => files?.length >= 1, { message: "Image is required." })
+  // // To not allow files other than images
+  // .refine((files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type), {
+  //   message: "Only .jpg, .jpeg, .png and .webp files are accepted.",
+  // })
+  // // To not allow files larger than 5MB
+  // .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, {
+  //   message: `Max file size is 5MB.`,
+  // }),
 });
 
 export type HeaderData = z.infer<typeof HeaderSchema>;
