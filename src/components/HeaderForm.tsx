@@ -19,13 +19,13 @@ import {
 } from "./ui/collapsible";
 import { ChevronDown, ChevronUp, User } from "lucide-react";
 
-const MAX_FILE_SIZE = 5000000;
-const ACCEPTED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/jpg",
-  "image/png",
-  "image/webp",
-];
+// const MAX_FILE_SIZE = 5000000;
+// const ACCEPTED_IMAGE_TYPES = [
+//   "image/jpeg",
+//   "image/jpg",
+//   "image/png",
+//   "image/webp",
+// ];
 
 const HeaderSchema = z.object({
   fullName: z.string().min(1, "Name cannot be empty"),
