@@ -26,6 +26,12 @@ CV Architect aims to provide a seamless experience for users to craft their resu
 - Customizable sections for header, summary, skills showcase, work history, education, and even custom information.
 - Export options to download the resume in different formats.
 
+## Future Updates
+
+- AI Generation feature for the resume content.
+- More sections
+- More customizability
+
 ## How to Use
 
 To use CV Architect, simply clone the repository and install the dependencies:
