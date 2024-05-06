@@ -200,7 +200,7 @@ function App() {
   }, [resume]);
 
   return (
-    <div className="main-bg flex w-full flex-col items-center justify-center gap-8 bg-gray-100 p-16 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-8">
+    <div className="main-bg flex h-full w-full flex-col items-center justify-center gap-8 bg-gray-100 p-8 sm:px-4 md:px-8 lg:flex-row lg:items-start lg:px-8">
       <div className="flex w-full flex-col gap-4 md:w-[21cm] lg:w-[360px]">
         <div className="flex w-full gap-2">
           <Button
@@ -229,15 +229,17 @@ function App() {
         <CustomForm onCustomInfo={(data) => setCustomInfo(data)} />
         <Footer />
       </div>
-      <Resume
-        ref={resumeRef}
-        header={{ ...headerInfo }}
-        summary={summaryInfo}
-        workHistory={{ ...workHistoryInfo }}
-        skills={{ ...skillsList }}
-        education={{ ...educationList }}
-        custom={{ ...customInfo }}
-      />
+      <div className="border shadow-xl">
+        <Resume
+          ref={resumeRef}
+          header={{ ...headerInfo }}
+          summary={summaryInfo}
+          workHistory={{ ...workHistoryInfo }}
+          skills={{ ...skillsList }}
+          education={{ ...educationList }}
+          custom={{ ...customInfo }}
+        />
+      </div>
     </div>
   );
 }

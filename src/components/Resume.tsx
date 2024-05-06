@@ -28,7 +28,7 @@ const Resume = React.forwardRef<HTMLDivElement, ResumeProps>(
     ref: ForwardedRef<HTMLDivElement>,
   ) => {
     return (
-      <div ref={ref} className="flex shrink-0 bg-white shadow-xl md:w-[21cm]">
+      <div ref={ref} className="flex shrink-0 bg-white md:w-[21cm]">
         <div className="flex w-full flex-col gap-2 p-6">
           {/* <img
               src={profilePicture}

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { schema } from "./SkillsForm";
 import FieldTitle from "./ui/FieldTitle";
+import React from "react";
 interface SkillsProps {
   skills: z.infer<typeof schema>;
 }
@@ -20,6 +21,10 @@ const Skills = ({ skills }: SkillsProps) => {
         ) : (
           <li className="list-none">No skills listed.</li>
         )}
+
+        {/* {skills.skills.map((skill, index) => (
+          <React.Fragment key={index}>{skill.skill}, </React.Fragment>
+        ))} */}
       </div>
     </div>
   );
