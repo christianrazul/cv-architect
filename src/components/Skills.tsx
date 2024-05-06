@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { schema } from "./SkillsForm";
 import FieldTitle from "./ui/FieldTitle";
-import React from "react";
 interface SkillsProps {
   skills: z.infer<typeof schema>;
 }
