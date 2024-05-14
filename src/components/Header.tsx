@@ -14,10 +14,10 @@ const Header = ({ header }: HeaderProps) => {
   return (
     header.fullName !== "" &&
     (header.profilePicture ? (
-      <div className="flex w-full gap-4 pb-2 pt-4">
+      <div className="flex w-full gap-8 pb-2 pt-4">
         <img
           src={header.profilePicture}
-          className="h-28 w-28 border-2 border-blue-950 object-cover"
+          className="h-36 w-36 border-2 border-blue-950 object-cover"
         />
         <div className="flex w-full flex-col justify-center gap-4">
           <h1 className="w-full text-left text-5xl font-bold">
