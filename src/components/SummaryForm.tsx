@@ -20,7 +20,9 @@ import { Button } from "./ui/button";
 import { ChevronDown, ChevronUp, FilePen } from "lucide-react";
 
 const SummarySchema = z.object({
-  summary: z.string().min(10, { message: "Write at least 10 words" }),
+  summary: z.string().min(10, {
+    message: "Summary must be at least 10 characters.",
+  }),
 });
 
 export type SummaryData = z.infer<typeof SummarySchema>;
@@ -72,15 +74,24 @@ const SummaryForm = ({ onSummary }: SummaryFormProps) => {
       </div>
       <CollapsibleContent>
         <Form {...form}>
-          <form onSubmit={handleSubmit((data) => onSummary(data))}>
+          <form
+            onSubmit={handleSubmit((data) => {
+              onSummary(data);
+              console.log(data);
+            })}
+          >
             <div className="flex flex-col gap-2 py-4">
               <FormField
                 control={control}
                 name="summary"
-                render={() => (
+                render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Textarea id="summary" placeholder="I am a..." />
+                      <Textarea
+                        id="summary"
+                        placeholder="I am a..."
+                        {...field}
+                      />
                     </FormControl>
                     <FormDescription>Briefly describe yourself</FormDescription>
                     <FormMessage />
