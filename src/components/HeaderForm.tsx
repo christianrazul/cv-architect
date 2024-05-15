@@ -47,40 +47,8 @@ const HeaderSchema = z.object({
   email: z.string().email(),
   contact: z.string(),
   address: z.string(),
-  linkedin: z
-    .string()
-    .refine(
-      (val) => {
-        try {
-          new URL(val.includes("://") ? val : `https://${val}`);
-          return true;
-        } catch (e) {
-          return false;
-        }
-      },
-      {
-        message: "Invalid URL",
-      },
-    )
-    .optional()
-    .or(z.literal("")),
-  website: z
-    .string()
-    .refine(
-      (val) => {
-        try {
-          new URL(val.includes("://") ? val : `https://${val}`);
-          return true;
-        } catch (e) {
-          return false;
-        }
-      },
-      {
-        message: "Invalid URL",
-      },
-    )
-    .optional()
-    .or(z.literal("")),
+  linkedin: customUrl.optional().or(z.literal("")),
+  website: customUrl.optional().or(z.literal("")),
   profilePicture: z.any().optional(),
   // To not allow empty files
   // .refine((files) => files?.length >= 1, { message: "Image is required." })
