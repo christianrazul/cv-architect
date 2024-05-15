@@ -27,11 +27,60 @@ import { ChevronDown, ChevronUp, User } from "lucide-react";
 //   "image/webp",
 // ];
 
+// Custom URL validation function
+const customUrl = z.string().refine(
+  (val) => {
+    try {
+      new URL(val.includes("://") ? val : `https://${val}`);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  },
+  {
+    message: "Invalid URL",
+  },
+);
+
 const HeaderSchema = z.object({
   fullName: z.string().min(1, "Name cannot be empty"),
   email: z.string().email(),
   contact: z.string(),
   address: z.string(),
+  linkedin: z
+    .string()
+    .refine(
+      (val) => {
+        try {
+          new URL(val.includes("://") ? val : `https://${val}`);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      },
+      {
+        message: "Invalid URL",
+      },
+    )
+    .optional()
+    .or(z.literal("")),
+  website: z
+    .string()
+    .refine(
+      (val) => {
+        try {
+          new URL(val.includes("://") ? val : `https://${val}`);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      },
+      {
+        message: "Invalid URL",
+      },
+    )
+    .optional()
+    .or(z.literal("")),
   profilePicture: z.any().optional(),
   // To not allow empty files
   // .refine((files) => files?.length >= 1, { message: "Image is required." })
@@ -52,6 +101,8 @@ export const headerDefaultValues = {
   email: "",
   contact: "",
   address: "",
+  linkedin: "",
+  website: "",
   profilePicture: "",
 };
 interface HeaderFormProps {
@@ -187,6 +238,38 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
                     <FormLabel>Address</FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your address" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name="linkedin"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>LinkedIn</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter your LinkedIn profile URL"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={control}
+                name="website"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Website</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Link your website if you have one!"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
