@@ -4,7 +4,11 @@ interface FieldTitleProps {
 }
 
 const FieldTitle = ({ color, title }: FieldTitleProps) => {
-  return <h1 className={`${color} py-1 pl-4 text-lg font-bold`}>{title}</h1>;
+  return (
+    <div style={{ background: `${color}` }}>
+      <h1 className={`py-1 pl-4 text-lg font-bold`}>{title}</h1>
+    </div>
+  );
 };
 
 export default FieldTitle;
