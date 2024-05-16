@@ -61,7 +61,7 @@ export const workHistoryDefaultValues = {
       description: ["", "", "", "", ""],
     },
   ],
-  color: "#fb923c",
+  color: "",
 };
 interface WorkHistoryFormProps {
   onWorkHistory: (data: WorkHistoryData) => void;

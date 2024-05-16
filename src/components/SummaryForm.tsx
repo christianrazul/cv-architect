@@ -32,7 +32,7 @@ export type SummaryData = z.infer<typeof SummarySchema>;
 
 export const SummaryDefaultValues = {
   summary: "",
-  color: "#EA580C",
+  color: "",
 };
 interface SummaryFormProps {
   onSummary: (summaryInfo: SummaryData) => void;

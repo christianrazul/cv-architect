@@ -66,7 +66,7 @@ export const EducationDefaultValues = {
       achievements: ["", "", "", "", ""],
     },
   ],
-  color: "#22c55e",
+  color: "",
 };
 interface EducationFormProps {
   onEducation: (data: EducationFormData) => void;

@@ -32,7 +32,7 @@ export type CustomData = z.infer<typeof CustomSchema>;
 export const customDefaultValues = {
   title: "",
   description: "",
-  color: "#60a5fa",
+  color: "",
 };
 interface HeaderFormProps {
   onCustomInfo: (customInfo: CustomData) => void;
