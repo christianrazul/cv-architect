@@ -21,6 +21,7 @@ const exampleResume = {
   summary: {
     summary:
       "Recent Computer Science graduate proficient in the ReactJS framework and modern web technologies. Skilled in developing responsive, user-friendly websites and applications. Demonstrates strong problem-solving abilities and effective communication skills. Eager to apply technical knowledge and innovative solutions in a dynamic web development role.",
+    color: "#EA580C",
   },
   skills: [
     { skill: "JavaScript" },
@@ -101,6 +102,7 @@ const emptyResume = {
   },
   summary: {
     summary: "",
+    color: "",
   },
   skills: [
     { skill: "" },

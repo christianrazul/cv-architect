@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -9,6 +9,7 @@ import {
   FormDescription,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "./ui/form";
 import {
@@ -18,17 +19,20 @@ import {
 } from "./ui/collapsible";
 import { Button } from "./ui/button";
 import { ChevronDown, ChevronUp, FilePen } from "lucide-react";
+import { GradientPicker } from "./GradientPicker";
 
 const SummarySchema = z.object({
   summary: z.string().min(10, {
     message: "Summary must be at least 10 characters.",
   }),
+  color: z.string(),
 });
 
 export type SummaryData = z.infer<typeof SummarySchema>;
 
 export const SummaryDefaultValues = {
   summary: "",
+  color: "#EA580C",
 };
 interface SummaryFormProps {
   onSummary: (summaryInfo: SummaryData) => void;
@@ -36,6 +40,7 @@ interface SummaryFormProps {
 
 const SummaryForm = ({ onSummary }: SummaryFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [background, setBackground] = useState(SummaryDefaultValues.color);
 
   const form = useForm<SummaryData>({
     resolver: zodResolver(SummarySchema),
@@ -98,12 +103,37 @@ const SummaryForm = ({ onSummary }: SummaryFormProps) => {
                   </FormItem>
                 )}
               />
+              <FormLabel>Pick a tab color</FormLabel>
+              <FormItem>
+                <FormControl>
+                  <Controller
+                    name="color"
+                    control={control}
+                    render={({ field }) => (
+                      <GradientPicker
+                        background={background}
+                        setBackground={(value) => {
+                          setBackground(value);
+                          field.onChange(value);
+                        }}
+                      />
+                    )}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             </div>
             <Button type="submit" variant="default">
-              Submit
+              Update
             </Button>
           </form>
         </Form>
+        {/* <Popover>
+          <PopoverTrigger>Color</PopoverTrigger>
+          <PopoverContent>
+            <SketchPicker color={SummaryDefaultValues.color} />
+          </PopoverContent>
+        </Popover> */}
       </CollapsibleContent>
     </Collapsible>
   );
