@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -19,10 +19,12 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { ChevronDown, ChevronUp, SquarePen } from "lucide-react";
+import { GradientPicker } from "./GradientPicker";
 
 const CustomSchema = z.object({
   title: z.string().min(1, "Title cannot be empty"),
   description: z.string().min(1, "Description cannot be empty"),
+  color: z.string(),
 });
 
 export type CustomData = z.infer<typeof CustomSchema>;
@@ -30,6 +32,7 @@ export type CustomData = z.infer<typeof CustomSchema>;
 export const customDefaultValues = {
   title: "",
   description: "",
+  color: "#60a5fa",
 };
 interface HeaderFormProps {
   onCustomInfo: (customInfo: CustomData) => void;
@@ -37,6 +40,7 @@ interface HeaderFormProps {
 
 const CustomForm = ({ onCustomInfo }: HeaderFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [background, setBackground] = useState(customDefaultValues.color);
 
   const form = useForm<CustomData>({
     resolver: zodResolver(CustomSchema),
@@ -113,6 +117,25 @@ const CustomForm = ({ onCustomInfo }: HeaderFormProps) => {
                   </FormItem>
                 )}
               />
+              <FormLabel>Pick a tab color</FormLabel>
+              <FormItem>
+                <FormControl>
+                  <Controller
+                    name="color"
+                    control={control}
+                    render={({ field }) => (
+                      <GradientPicker
+                        background={background}
+                        setBackground={(value) => {
+                          setBackground(value);
+                          field.onChange(value);
+                        }}
+                      />
+                    )}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
             </div>
             <Button variant="default" type="submit">
               Submit

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -18,6 +18,7 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 import { ChevronDown, ChevronUp, User } from "lucide-react";
+import { GradientPicker } from "./GradientPicker";
 
 // const MAX_FILE_SIZE = 5000000;
 // const ACCEPTED_IMAGE_TYPES = [
@@ -26,6 +27,17 @@ import { ChevronDown, ChevronUp, User } from "lucide-react";
 //   "image/png",
 //   "image/webp",
 // ];
+
+// To not allow empty files
+// .refine((files) => files?.length >= 1, { message: "Image is required." })
+// // To not allow files other than images
+// .refine((files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type), {
+//   message: "Only .jpg, .jpeg, .png and .webp files are accepted.",
+// })
+// // To not allow files larger than 5MB
+// .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, {
+//   message: `Max file size is 5MB.`,
+// }),
 
 // Custom URL validation function
 const customUrl = z.string().refine(
@@ -43,35 +55,43 @@ const customUrl = z.string().refine(
 );
 
 const HeaderSchema = z.object({
-  fullName: z.string().min(1, "Name cannot be empty"),
-  email: z.string().email(),
-  contact: z.string(),
-  address: z.string(),
-  linkedin: customUrl.optional().or(z.literal("")),
-  website: customUrl.optional().or(z.literal("")),
-  profilePicture: z.any().optional(),
-  // To not allow empty files
-  // .refine((files) => files?.length >= 1, { message: "Image is required." })
-  // // To not allow files other than images
-  // .refine((files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type), {
-  //   message: "Only .jpg, .jpeg, .png and .webp files are accepted.",
-  // })
-  // // To not allow files larger than 5MB
-  // .refine((files) => files?.[0]?.size <= MAX_FILE_SIZE, {
-  //   message: `Max file size is 5MB.`,
-  // }),
+  header: z.object({
+    fullName: z.string().min(1, "Name cannot be empty"),
+    email: z.string().email(),
+    contact: z.string(),
+    address: z.string(),
+    linkedin: customUrl.optional().or(z.literal("")),
+    website: customUrl.optional().or(z.literal("")),
+    profilePicture: z.any().optional(),
+  }),
+  colors: z.object({
+    email: z.string(),
+    contact: z.string(),
+    address: z.string(),
+    linkedin: z.string(),
+    website: z.string(),
+  }),
 });
 
 export type HeaderData = z.infer<typeof HeaderSchema>;
 
 export const headerDefaultValues = {
-  fullName: "",
-  email: "",
-  contact: "",
-  address: "",
-  linkedin: "",
-  website: "",
-  profilePicture: "",
+  header: {
+    fullName: "",
+    email: "",
+    contact: "",
+    address: "",
+    linkedin: "",
+    website: "",
+    profilePicture: "",
+  },
+  colors: {
+    email: "",
+    contact: "",
+    address: "",
+    linkedin: "",
+    website: "",
+  },
 };
 interface HeaderFormProps {
   onHeaderInfo: (headerInfo: HeaderData) => void;
@@ -79,6 +99,21 @@ interface HeaderFormProps {
 
 const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [backgroundEmail, setBackgroundEmail] = useState(
+    headerDefaultValues.colors.email,
+  );
+  const [backgroundContact, setBackgroundContact] = useState(
+    headerDefaultValues.colors.contact,
+  );
+  const [backgroundAddress, setBackgroundAddress] = useState(
+    headerDefaultValues.colors.address,
+  );
+  const [backgroundLinkedin, setBackgroundLinkedin] = useState(
+    headerDefaultValues.colors.linkedin,
+  );
+  const [backgroundWebsite, setBackgroundWebsite] = useState(
+    headerDefaultValues.colors.website,
+  );
 
   const form = useForm<HeaderData>({
     resolver: zodResolver(HeaderSchema),
@@ -123,15 +158,18 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
         <Form {...form}>
           <form
             onSubmit={handleSubmit(async (data) => {
-              if (data.profilePicture[0]) {
+              if (data.header.profilePicture[0]) {
                 // transform FileList Object into a dataURL so that it can be used in img
                 const file = new FileReader();
 
                 file.onload = () => {
-                  onHeaderInfo({ ...data, profilePicture: file.result });
+                  onHeaderInfo({
+                    ...data,
+                    header: { ...data.header, profilePicture: file.result },
+                  });
                 };
 
-                file.readAsDataURL(data.profilePicture[0]);
+                file.readAsDataURL(data.header.profilePicture[0]);
               } else {
                 onHeaderInfo({ ...data });
               }
@@ -141,14 +179,14 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
             <div className="flex flex-col gap-2 py-4">
               <FormField
                 control={control}
-                name="profilePicture"
+                name="header.profilePicture"
                 render={() => (
                   <FormItem>
                     <FormLabel>Profile Picture</FormLabel>
                     <FormControl>
                       <Input
                         type="file"
-                        {...register("profilePicture")}
+                        {...register("header.profilePicture")}
                         accept="image/*"
                       />
                     </FormControl>
@@ -158,7 +196,7 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
               />
               <FormField
                 control={control}
-                name="fullName"
+                name="header.fullName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Full Name</FormLabel>
@@ -171,10 +209,31 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
               />
               <FormField
                 control={control}
-                name="email"
+                name="header.email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel className="flex items-center justify-between gap-2">
+                      Email
+                      <FormItem>
+                        <FormControl>
+                          <Controller
+                            name="colors.email"
+                            control={control}
+                            render={({ field }) => (
+                              <GradientPicker
+                                variant="sm"
+                                background={backgroundEmail}
+                                setBackground={(value) => {
+                                  setBackgroundEmail(value);
+                                  field.onChange(value);
+                                }}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your email" {...field} />
                     </FormControl>
@@ -184,10 +243,31 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
               />
               <FormField
                 control={control}
-                name="contact"
+                name="header.contact"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Contact Number</FormLabel>
+                    <FormLabel className="flex items-center justify-between gap-2">
+                      Contact Number
+                      <FormItem>
+                        <FormControl>
+                          <Controller
+                            name="colors.contact"
+                            control={control}
+                            render={({ field }) => (
+                              <GradientPicker
+                                variant="sm"
+                                background={backgroundContact}
+                                setBackground={(value) => {
+                                  setBackgroundContact(value);
+                                  field.onChange(value);
+                                }}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter your contact number"
@@ -200,10 +280,31 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
               />
               <FormField
                 control={control}
-                name="address"
+                name="header.address"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Address</FormLabel>
+                    <FormLabel className="flex items-center justify-between gap-2">
+                      Address
+                      <FormItem>
+                        <FormControl>
+                          <Controller
+                            name="colors.address"
+                            control={control}
+                            render={({ field }) => (
+                              <GradientPicker
+                                variant="sm"
+                                background={backgroundAddress}
+                                setBackground={(value) => {
+                                  setBackgroundAddress(value);
+                                  field.onChange(value);
+                                }}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Enter your address" {...field} />
                     </FormControl>
@@ -213,10 +314,31 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
               />
               <FormField
                 control={control}
-                name="linkedin"
+                name="header.linkedin"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>LinkedIn</FormLabel>
+                    <FormLabel className="flex items-center justify-between gap-2">
+                      LinkedIn
+                      <FormItem>
+                        <FormControl>
+                          <Controller
+                            name="colors.linkedin"
+                            control={control}
+                            render={({ field }) => (
+                              <GradientPicker
+                                variant="sm"
+                                background={backgroundLinkedin}
+                                setBackground={(value) => {
+                                  setBackgroundLinkedin(value);
+                                  field.onChange(value);
+                                }}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Enter your LinkedIn profile URL"
@@ -229,10 +351,31 @@ const HeaderForm = ({ onHeaderInfo }: HeaderFormProps) => {
               />
               <FormField
                 control={control}
-                name="website"
+                name="header.website"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Website</FormLabel>
+                    <FormLabel className="flex items-center justify-between gap-2">
+                      Website
+                      <FormItem>
+                        <FormControl>
+                          <Controller
+                            name="colors.website"
+                            control={control}
+                            render={({ field }) => (
+                              <GradientPicker
+                                variant="sm"
+                                background={backgroundWebsite}
+                                setBackground={(value) => {
+                                  setBackgroundWebsite(value);
+                                  field.onChange(value);
+                                }}
+                              />
+                            )}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Link your website if you have one!"

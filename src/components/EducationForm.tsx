@@ -20,13 +20,14 @@ import {
   ChevronUp,
   GraduationCap,
 } from "lucide-react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { Calendar } from "./ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { GradientPicker } from "./GradientPicker";
 
 const EducationSchema = z.object({
   school: z
@@ -49,17 +50,23 @@ const EducationSchema = z.object({
       achievements: z.array(z.string()).min(1),
     })
     .array(),
+  color: z.string(),
 });
 
 export type EducationFormData = z.infer<typeof EducationSchema>;
 
 export const EducationDefaultValues = {
-  name: "",
-  location: "",
-  degree: "",
-  startDate: new Date(),
-  endDate: new Date(),
-  achievements: ["", "", "", "", ""],
+  school: [
+    {
+      name: "",
+      location: "",
+      degree: "",
+      startDate: new Date(),
+      endDate: new Date(),
+      achievements: ["", "", "", "", ""],
+    },
+  ],
+  color: "#22c55e",
 };
 interface EducationFormProps {
   onEducation: (data: EducationFormData) => void;
@@ -68,11 +75,13 @@ interface EducationFormProps {
 const EducationForm = ({ onEducation }: EducationFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [achievementCount, setAchievementCount] = useState(1);
+  const [background, setBackground] = useState(EducationDefaultValues.color);
 
   const form = useForm({
     resolver: zodResolver(EducationSchema),
     defaultValues: {
-      school: [EducationDefaultValues],
+      school: EducationDefaultValues.school,
+      color: EducationDefaultValues.color,
     },
   });
 
@@ -123,6 +132,25 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
             })}
             className="space-y-2"
           >
+            <FormLabel>Pick a tab color</FormLabel>
+            <FormItem>
+              <FormControl>
+                <Controller
+                  name="color"
+                  control={control}
+                  render={({ field }) => (
+                    <GradientPicker
+                      background={background}
+                      setBackground={(value) => {
+                        setBackground(value);
+                        field.onChange(value);
+                      }}
+                    />
+                  )}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
             {fields.map((field, index) => {
               return (
                 <div
@@ -325,7 +353,7 @@ const EducationForm = ({ onEducation }: EducationFormProps) => {
               <Button
                 type="button"
                 onClick={() => {
-                  append(EducationDefaultValues);
+                  append(EducationDefaultValues.school);
                 }}
                 variant="secondary"
               >

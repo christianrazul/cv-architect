@@ -12,165 +12,206 @@ import { Button } from "./components/ui/button";
 import Footer from "./components/Footer";
 
 const exampleResume = {
-  header: {
-    fullName: "Rudolph Christian Razul",
-    email: "razulchristian@gmail.com",
-    contact: "09167482075",
-    address: "Davao City",
+  headerInfo: {
+    header: {
+      fullName: "Rudolph Christian Razul",
+      email: "razulchristian@gmail.com",
+      contact: "09167482075",
+      address: "Davao City",
+    },
+    colors: {
+      email: "#EA580C",
+      contact: "#facc15",
+      address: "#fb923c",
+      linkedin: "#22c55e",
+      website: "#60a5fa",
+    },
   },
   summary: {
     summary:
       "Recent Computer Science graduate proficient in the ReactJS framework and modern web technologies. Skilled in developing responsive, user-friendly websites and applications. Demonstrates strong problem-solving abilities and effective communication skills. Eager to apply technical knowledge and innovative solutions in a dynamic web development role.",
     color: "#EA580C",
   },
-  skills: [
-    { skill: "JavaScript" },
-    { skill: "TypeScript" },
-    { skill: "ReactJS" },
-    { skill: "TailWindCSS" },
-    { skill: "NodeJS" },
-    { skill: "Critical Thinking" },
-    { skill: "Effective Interpersonal Skills" },
-    { skill: "Flexibility and Adaptability" },
-    { skill: "Resourcefulness" },
-    { skill: "Adobe Photoshop" },
-  ],
-  workInfo: [
-    {
-      company: "Tech Innovations Inc.",
-      address: "Tech City, TC 56789",
-      role: "Software Developer",
-      startDate: new Date("2020-01-01"),
-      endDate: new Date("2022-01-01"),
-      description: [
-        "Developed and maintained code for in-house and client websites primarily using HTML, CSS, Sass, JavaScript, and jQuery",
-        "Managed time-sensitive updates, including content changes and database upgrades",
-        "Planned, wrote, and debugged web applications and software with complete accuracy",
-      ],
-    },
-    {
-      company: "Global Tech Solutions",
-      address: "Cyber Town, CT 98765",
-      role: "Senior Developer",
-      startDate: new Date("2022-02-01"),
-      endDate: new Date("2024-01-01"),
-      description: [
-        "Led a team of software developers to drive the successful execution of development projects from concept through delivery",
-        "Participated in the design, development, and testing of software applications",
-        "Reviewed code work for accuracy and functionality",
-      ],
-    },
-  ],
-  school: [
-    {
-      name: "University of Example",
-      location: "Example City, EC",
-      degree: "B.Sc. in Computer Science",
-      startDate: new Date("2016-09-01"),
-      endDate: new Date("2020-06-01"),
-      achievements: [
-        "Graduated Summa Cum Laude",
-        "Dean's List every semester",
-        "Completed a senior project on machine learning algorithms",
-      ],
-    },
-    {
-      name: "Masters Institute of Technology",
-      location: "Techville, TV",
-      degree: "M.Sc. in Artificial Intelligence",
-      startDate: new Date("2021-09-01"),
-      endDate: new Date("2023-06-01"),
-      achievements: [
-        "Published thesis on deep reinforcement learning",
-        "Teaching Assistant for undergraduate machine learning courses",
-        "Co-authored three papers published in peer-reviewed journals",
-      ],
-    },
-  ],
+  skills: {
+    skills: [
+      { skill: "JavaScript" },
+      { skill: "TypeScript" },
+      { skill: "ReactJS" },
+      { skill: "TailWindCSS" },
+      { skill: "NodeJS" },
+      { skill: "Critical Thinking" },
+      { skill: "Effective Interpersonal Skills" },
+      { skill: "Flexibility and Adaptability" },
+      { skill: "Resourcefulness" },
+      { skill: "Adobe Photoshop" },
+    ],
+    color: "#facc15",
+  },
+  workHistory: {
+    workInfo: [
+      {
+        company: "Tech Innovations Inc.",
+        address: "Tech City, TC 56789",
+        role: "Software Developer",
+        startDate: new Date("2020-01-01"),
+        endDate: new Date("2022-01-01"),
+        description: [
+          "Developed and maintained code for in-house and client websites primarily using HTML, CSS, Sass, JavaScript, and jQuery",
+          "Managed time-sensitive updates, including content changes and database upgrades",
+          "Planned, wrote, and debugged web applications and software with complete accuracy",
+        ],
+      },
+      {
+        company: "Global Tech Solutions",
+        address: "Cyber Town, CT 98765",
+        role: "Senior Developer",
+        startDate: new Date("2022-02-01"),
+        endDate: new Date("2024-01-01"),
+        description: [
+          "Led a team of software developers to drive the successful execution of development projects from concept through delivery",
+          "Participated in the design, development, and testing of software applications",
+          "Reviewed code work for accuracy and functionality",
+        ],
+      },
+    ],
+    color: "#fb923c",
+  },
+  educationHistory: {
+    school: [
+      {
+        name: "University of Example",
+        location: "Example City, EC",
+        degree: "B.Sc. in Computer Science",
+        startDate: new Date("2016-09-01"),
+        endDate: new Date("2020-06-01"),
+        achievements: [
+          "Graduated Summa Cum Laude",
+          "Dean's List every semester",
+          "Completed a senior project on machine learning algorithms",
+        ],
+      },
+      {
+        name: "Masters Institute of Technology",
+        location: "Techville, TV",
+        degree: "M.Sc. in Artificial Intelligence",
+        startDate: new Date("2021-09-01"),
+        endDate: new Date("2023-06-01"),
+        achievements: [
+          "Published thesis on deep reinforcement learning",
+          "Teaching Assistant for undergraduate machine learning courses",
+          "Co-authored three papers published in peer-reviewed journals",
+        ],
+      },
+    ],
+    color: "#22c55e",
+  },
   custom: {
     title: "FUN FACTS",
     description: "This resume was created using an app I built!",
+    color: "#60a5fa",
   },
 };
 
 const emptyResume = {
-  header: {
-    fullName: "",
-    email: "",
-    contact: "",
-    address: "",
+  headerInfo: {
+    header: {
+      fullName: "",
+      email: "",
+      contact: "",
+      address: "",
+    },
+    colors: {
+      email: "",
+      contact: "",
+      address: "",
+      linkedin: "",
+      website: "",
+    },
   },
   summary: {
     summary: "",
     color: "",
   },
-  skills: [
-    { skill: "" },
-    { skill: "" },
-    { skill: "" },
-    { skill: "" },
-    { skill: "" },
-    { skill: "" },
-    { skill: "" },
-    { skill: "" },
-    { skill: "" },
-    { skill: "" },
-  ],
-  workInfo: [
-    {
-      company: "",
-      address: "",
-      role: "",
-      startDate: new Date(""),
-      endDate: new Date(""),
-      description: [],
-    },
-    {
-      company: "",
-      address: "",
-      role: "",
-      startDate: new Date(""),
-      endDate: new Date(""),
-      description: [],
-    },
-  ],
-  school: [
-    {
-      name: "",
-      location: "",
-      degree: "",
-      startDate: new Date(),
-      endDate: new Date(),
-      achievements: [],
-    },
-    {
-      name: "",
-      location: "",
-      degree: "",
-      startDate: new Date(),
-      endDate: new Date(),
-      achievements: [],
-    },
-  ],
+  skills: {
+    skills: [
+      { skill: "" },
+      { skill: "" },
+      { skill: "" },
+      { skill: "" },
+      { skill: "" },
+      { skill: "" },
+      { skill: "" },
+      { skill: "" },
+      { skill: "" },
+      { skill: "" },
+    ],
+    color: "",
+  },
+  workHistory: {
+    workInfo: [
+      {
+        company: "",
+        address: "",
+        role: "",
+        startDate: new Date(""),
+        endDate: new Date(""),
+        description: [],
+      },
+      {
+        company: "",
+        address: "",
+        role: "",
+        startDate: new Date(""),
+        endDate: new Date(""),
+        description: [],
+      },
+    ],
+    color: "",
+  },
+  educationHistory: {
+    school: [
+      {
+        name: "",
+        location: "",
+        degree: "",
+        startDate: new Date(),
+        endDate: new Date(),
+        achievements: [],
+      },
+      {
+        name: "",
+        location: "",
+        degree: "",
+        startDate: new Date(),
+        endDate: new Date(),
+        achievements: [],
+      },
+    ],
+    color: "",
+  },
   custom: {
     title: "",
     description: "",
+    color: "",
   },
 };
 
 function App() {
   const [resume, setResume] = useState(exampleResume);
 
-  const [headerInfo, setHeaderInfo] = useState(resume.header);
+  const [headerInfo, setHeaderInfo] = useState(resume.headerInfo);
   const [summaryInfo, setSummaryInfo] = useState(resume.summary);
   const [skillsList, setSkillsList] = useState<SkillsFormData>({
-    skills: resume.skills,
+    skills: resume.skills.skills,
+    color: resume.skills.color,
   });
   const [workHistoryInfo, setWorkHistoryInfo] = useState<WorkHistoryData>({
-    workInfo: resume.workInfo,
+    workInfo: resume.workHistory.workInfo,
+    color: resume.workHistory.color,
   });
   const [educationList, setEducationList] = useState<EducationFormData>({
-    school: resume.school,
+    school: resume.educationHistory.school,
+    color: resume.educationHistory.color,
   });
   const [customInfo, setCustomInfo] = useState<CustomData>(resume.custom);
 
@@ -178,7 +219,7 @@ function App() {
 
   const handlePrint = useReactToPrint({
     content: () => resumeRef.current,
-    documentTitle: `${headerInfo.fullName} Resume`,
+    documentTitle: `${headerInfo.header.fullName} Resume`,
     onAfterPrint: () => console.log("Print complete!"),
     onBeforeGetContent: () => {
       ("");
@@ -187,16 +228,19 @@ function App() {
 
   // changes all resume states based on load or clear
   useEffect(() => {
-    setHeaderInfo(resume.header);
+    setHeaderInfo(resume.headerInfo);
     setSummaryInfo(resume.summary);
     setSkillsList({
-      skills: resume.skills,
+      skills: resume.skills.skills,
+      color: resume.skills.color,
     });
     setWorkHistoryInfo({
-      workInfo: resume.workInfo,
+      workInfo: resume.workHistory.workInfo,
+      color: resume.workHistory.color,
     });
     setEducationList({
-      school: resume.school,
+      school: resume.educationHistory.school,
+      color: resume.educationHistory.color,
     });
     setCustomInfo(resume.custom);
   }, [resume]);

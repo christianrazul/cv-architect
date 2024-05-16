@@ -29,17 +29,19 @@ export function GradientPicker({
   background,
   setBackground,
   className,
+  variant,
 }: {
   background: string;
   setBackground: (background: string) => void;
   className?: string;
+  variant?: "sm" | "md";
 }) {
   const solids = [
     "#EA580C",
-    "#ff75c3",
-    "#ffa647",
-    "#ffe83f",
-    "#9fff5b",
+    "#facc15",
+    "#fb923c",
+    "#22c55e",
+    "#60a5fa",
     "#70e2ff",
     "#cd93ff",
     "#09203f",
@@ -80,28 +82,50 @@ export function GradientPicker({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          variant={"outline"}
-          className={cn(
-            "w-[220px] justify-start text-left font-normal",
-            !background && "text-muted-foreground",
-            className,
-          )}
-        >
-          <div className="flex w-full items-center gap-2">
-            {background ? (
-              <div
-                className="h-4 w-4 rounded !bg-cover !bg-center transition-all"
-                style={{ background }}
-              ></div>
-            ) : (
-              <Paintbrush className="h-4 w-4" />
+        {variant == "sm" ? (
+          <Button
+            variant={"outline"}
+            className={cn(
+              "justify-start text-left font-normal",
+              !background && "text-muted-foreground",
+              className,
             )}
-            <div className="flex-1 truncate">
-              {background ? background : "Pick a color"}
+          >
+            <div className="flex w-full items-center gap-2">
+              {background ? (
+                <div
+                  className="h-4 w-4 rounded !bg-cover !bg-center transition-all"
+                  style={{ background }}
+                ></div>
+              ) : (
+                <Paintbrush className="h-4 w-4" />
+              )}
             </div>
-          </div>
-        </Button>
+          </Button>
+        ) : (
+          <Button
+            variant={"outline"}
+            className={cn(
+              "w-[220px] justify-start text-left font-normal",
+              !background && "text-muted-foreground",
+              className,
+            )}
+          >
+            <div className="flex w-full items-center gap-2">
+              {background ? (
+                <div
+                  className="h-4 w-4 rounded !bg-cover !bg-center transition-all"
+                  style={{ background }}
+                ></div>
+              ) : (
+                <Paintbrush className="h-4 w-4" />
+              )}
+              <div className="flex-1 truncate">
+                {background ? background : "Pick a color"}
+              </div>
+            </div>
+          </Button>
+        )}
       </PopoverTrigger>
       <PopoverContent className="w-64">
         <Tabs defaultValue={defaultTab} className="w-full">
@@ -167,22 +191,3 @@ export function GradientPicker({
     </Popover>
   );
 }
-
-const GradientButton = ({
-  background,
-  children,
-}: {
-  background: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <div
-      className="relative rounded-md !bg-cover !bg-center p-0.5 transition-all"
-      style={{ background }}
-    >
-      <div className="rounded-md bg-popover/80 p-1 text-center text-xs">
-        {children}
-      </div>
-    </div>
-  );
-};

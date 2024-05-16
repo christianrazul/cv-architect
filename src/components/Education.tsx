@@ -8,7 +8,7 @@ interface EducationProps {
 const Education = ({ schools }: EducationProps) => {
   return (
     <div className="w-full">
-      <FieldTitle color="bg-green-500" title="EDUCATION & ACHIEVEMENTS" />
+      <FieldTitle color={schools.color} title="EDUCATION & ACHIEVEMENTS" />
       {schools.school[0].name !== "" ? (
         <div className="flex w-full flex-col gap-4 px-4 pb-2 pt-4">
           {schools.school.map((school, index) => (
@@ -30,7 +30,9 @@ const Education = ({ schools }: EducationProps) => {
                   })}
                 </p>
               </div>
-              <p className="mb-1 font-bold text-primary">{school.degree}</p>
+              <p className="mb-1 font-bold" style={{ color: schools.color }}>
+                {school.degree}
+              </p>
               <ul className="ml-5 list-outside list-disc text-sm">
                 {school.achievements.map(
                   (achievement, index) =>

@@ -10,16 +10,18 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Trash } from "lucide-react";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { z } from "zod";
 import { useState } from "react";
 import { Label } from "./ui/label";
+import { GradientPicker } from "./GradientPicker";
 
 export const schema = z.object({
   skills: z
@@ -27,6 +29,7 @@ export const schema = z.object({
       skill: z.string(),
     })
     .array(),
+  color: z.string(),
 });
 
 export type SkillsFormData = z.infer<typeof schema>;
@@ -35,17 +38,22 @@ interface SkillsFormProps {
   onSkills: (data: SkillsFormData) => void;
 }
 
+const SkillsFormDefaultValues = {
+  skills: [
+    {
+      skill: "",
+    },
+  ],
+  color: "",
+};
+
 const SkillsForm = ({ onSkills }: SkillsFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [background, setBackground] = useState(SkillsFormDefaultValues.color);
+
   const form = useForm<SkillsFormData>({
     resolver: zodResolver(schema),
-    defaultValues: {
-      skills: [
-        {
-          skill: "",
-        },
-      ],
-    },
+    defaultValues: SkillsFormDefaultValues,
   });
 
   const {
@@ -98,6 +106,25 @@ const SkillsForm = ({ onSkills }: SkillsFormProps) => {
             })}
             className="space-y-2"
           >
+            <FormLabel>Pick a tab color</FormLabel>
+            <FormItem>
+              <FormControl>
+                <Controller
+                  name="color"
+                  control={control}
+                  render={({ field }) => (
+                    <GradientPicker
+                      background={background}
+                      setBackground={(value) => {
+                        setBackground(value);
+                        field.onChange(value);
+                      }}
+                    />
+                  )}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
             <div className="flex flex-col gap-2 py-2">
               {fields.map((field, index) => {
                 return (

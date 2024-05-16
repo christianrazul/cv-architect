@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -26,6 +26,7 @@ import { cn } from "@/lib/utils";
 import { Briefcase, CalendarIcon, ChevronDown, ChevronUp } from "lucide-react";
 import { format } from "date-fns";
 import { useState } from "react";
+import { GradientPicker } from "./GradientPicker";
 
 export const WorkHistorySchema = z.object({
   workInfo: z
@@ -44,17 +45,23 @@ export const WorkHistorySchema = z.object({
       }),
     })
     .array(),
+  color: z.string(),
 });
 
 export type WorkHistoryData = z.infer<typeof WorkHistorySchema>;
 
 export const workHistoryDefaultValues = {
-  company: "",
-  address: "",
-  role: "",
-  startDate: new Date(),
-  endDate: new Date(),
-  description: ["", "", "", "", ""],
+  workInfo: [
+    {
+      company: "",
+      address: "",
+      role: "",
+      startDate: new Date(),
+      endDate: new Date(),
+      description: ["", "", "", "", ""],
+    },
+  ],
+  color: "#fb923c",
 };
 interface WorkHistoryFormProps {
   onWorkHistory: (data: WorkHistoryData) => void;
@@ -63,12 +70,11 @@ interface WorkHistoryFormProps {
 const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [descriptionCount, setDescriptionCount] = useState(1);
+  const [background, setBackground] = useState(workHistoryDefaultValues.color);
 
   const form = useForm<WorkHistoryData>({
     resolver: zodResolver(WorkHistorySchema),
-    defaultValues: {
-      workInfo: [workHistoryDefaultValues],
-    },
+    defaultValues: workHistoryDefaultValues,
   });
 
   const { control, handleSubmit } = form;
@@ -119,6 +125,25 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
             })}
             className="space-y-2 py-2"
           >
+            <FormLabel>Pick a tab color</FormLabel>
+            <FormItem>
+              <FormControl>
+                <Controller
+                  name="color"
+                  control={control}
+                  render={({ field }) => (
+                    <GradientPicker
+                      background={background}
+                      setBackground={(value) => {
+                        setBackground(value);
+                        field.onChange(value);
+                      }}
+                    />
+                  )}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
             {fields.map((field, index) => {
               return (
                 <div
@@ -326,11 +351,11 @@ const WorkHistoryForm = ({ onWorkHistory }: WorkHistoryFormProps) => {
               <Button type="submit" variant="default" className="self-end">
                 Submit
               </Button>
-              {/* Add a School Button*/}
+              {/* Add a Job Button*/}
               <Button
                 type="button"
                 onClick={() => {
-                  append(workHistoryDefaultValues);
+                  append(workHistoryDefaultValues.workInfo);
                 }}
                 variant="secondary"
               >

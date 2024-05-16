@@ -7,7 +7,7 @@ interface WorkHistoryProps {
 const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
   return (
     <div className="w-full">
-      <FieldTitle color="bg-orange-400" title="WORK HISTORY" />
+      <FieldTitle color={`${workHistory.color}`} title="WORK HISTORY" />
       <div className="flex w-full flex-col gap-4 px-4 pb-2 pt-4">
         {workHistory.workInfo[0].company !== "" ? (
           workHistory.workInfo.map((work, index) => (
@@ -29,7 +29,12 @@ const WorkHistory = ({ workHistory }: WorkHistoryProps) => {
                   })}
                 </p>
               </div>
-              <p className="mb-1 font-bold text-primary">{work.role}</p>
+              <p
+                className={`mb-1 font-bold`}
+                style={{ color: workHistory.color }}
+              >
+                {work.role}
+              </p>
               <ul className="ml-5 list-outside list-disc text-sm">
                 {work.description.map((desc, index) => {
                   return desc && <li key={index}>{desc}</li>;

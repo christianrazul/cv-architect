@@ -9,7 +9,7 @@ const Custom = ({ customInfo }: CustomDataProps) => {
   return (
     customInfo.title !== "" && (
       <div className="w-full">
-        <FieldTitle color="bg-blue-400" title={customInfo.title} />
+        <FieldTitle color={customInfo.color} title={customInfo.title} />
         <div className="px-4 pb-2 pt-4">
           <p>{customInfo.description}</p>
         </div>

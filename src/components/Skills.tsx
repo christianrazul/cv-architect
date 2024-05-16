@@ -8,7 +8,7 @@ interface SkillsProps {
 const Skills = ({ skills }: SkillsProps) => {
   return (
     <div className="w-full">
-      <FieldTitle color="bg-yellow-400" title="SKILLS" />
+      <FieldTitle color={skills.color} title="SKILLS" />
       <div className="p-4 pb-2">
         {/* Check array length and if it's empty, render no skills listed */}
         {skills.skills.length !== 0 && skills.skills[0].skill !== "" ? (
