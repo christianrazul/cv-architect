@@ -86,23 +86,6 @@ const SummaryForm = ({ onSummary }: SummaryFormProps) => {
             })}
           >
             <div className="flex flex-col gap-2 py-4">
-              <FormField
-                control={control}
-                name="summary"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <Textarea
-                        id="summary"
-                        placeholder="I am a..."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormDescription>Briefly describe yourself</FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormLabel>Pick a tab color</FormLabel>
               <FormItem>
                 <FormControl>
@@ -122,6 +105,24 @@ const SummaryForm = ({ onSummary }: SummaryFormProps) => {
                 </FormControl>
                 <FormMessage />
               </FormItem>
+              <FormField
+                control={control}
+                name="summary"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Summary</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        id="summary"
+                        placeholder="I am a..."
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>Briefly describe yourself</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
             <Button type="submit" variant="default">
               Update

@@ -88,6 +88,25 @@ const CustomForm = ({ onCustomInfo }: HeaderFormProps) => {
             className="space-y-2 "
           >
             <div className="flex flex-col gap-2 py-4">
+              <FormLabel>Pick a tab color</FormLabel>
+              <FormItem>
+                <FormControl>
+                  <Controller
+                    name="color"
+                    control={control}
+                    render={({ field }) => (
+                      <GradientPicker
+                        background={background}
+                        setBackground={(value) => {
+                          setBackground(value);
+                          field.onChange(value);
+                        }}
+                      />
+                    )}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
               <FormField
                 control={control}
                 name="title"
@@ -117,25 +136,6 @@ const CustomForm = ({ onCustomInfo }: HeaderFormProps) => {
                   </FormItem>
                 )}
               />
-              <FormLabel>Pick a tab color</FormLabel>
-              <FormItem>
-                <FormControl>
-                  <Controller
-                    name="color"
-                    control={control}
-                    render={({ field }) => (
-                      <GradientPicker
-                        background={background}
-                        setBackground={(value) => {
-                          setBackground(value);
-                          field.onChange(value);
-                        }}
-                      />
-                    )}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
             </div>
             <Button variant="default" type="submit">
               Submit
